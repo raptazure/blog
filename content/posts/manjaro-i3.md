@@ -9,10 +9,11 @@ tags:
 
 ## Our Story
 
-&nbsp; &nbsp; &nbsp; 说来也挺幸运的，与 Manjaro Linux 的一场偶遇似乎改变了我整个大一的轨迹，不如说是我在计算机领域的另一位启蒙老师吧。  
-&nbsp; &nbsp; &nbsp; 如果一个月以前的我没有决定安装 Linux + Windows 双系统的话，也许现在我还不知道开源是什么，也许现在我还不会用 git 和 GitHub，也许现在我还没有什么写代码的动力，也许现在我会和很多人一样整日忙于刷题内卷。在这一个多月的时间里，从一开始的 KDE 桌面折腾到 i3wm，从 Visual Studio Code 折腾到 neovim + coc，从默认的 shell 折腾到 fish + omf，从自带的 terminal emulator 折腾到 alacritty... 在编写各种配置文件，完成各种个性化定制的同时，我也熟悉并喜欢上了命令行环境的高效优雅，爱上了 *nix 阵营的极简主义，并对开源的理念产生了某种心理认同。确实，各种配置也许显得很费时间，经常熬夜修改各种环境错误，在 GitHub issue 区到处寻找解答，但是在这一个月里，我与计算机之间的距离仿佛被拉近，内心也萌发了一个关于理想的美好愿望，不如说，这也算是某种缘分吧。  
-&nbsp; &nbsp; &nbsp; 也许在未来的某天，我会切换 macOS 为主力系统；也许在未来的某天，我会回到 vscode，只不过配上了 vim plugin，也许我不能再称自己为一个纯正的 Linux User。但是，有些事物一旦相识，便刻入骨髓了啊。
+说来也挺幸运的，与 Manjaro Linux 的一场偶遇似乎改变了我整个大一的轨迹，不如说是我在计算机领域的另一位启蒙老师吧。
 
+如果一个月以前的我没有决定安装 Linux + Windows 双系统的话，也许现在我还不知道开源是什么，也许现在我还不会用 git 和 GitHub，也许现在我还没有什么写代码的动力，也许现在我会和很多人一样整日忙于刷题内卷。在这一个多月的时间里，从一开始的 KDE 桌面折腾到 i3wm，从 Visual Studio Code 折腾到 neovim + coc，从默认的 shell 折腾到 fish + omf，从自带的 terminal emulator 折腾到 alacritty... 在编写各种配置文件，完成各种个性化定制的同时，我也熟悉并喜欢上了命令行环境的高效优雅，爱上了 \*nix 阵营的极简主义，并对开源的理念产生了某种心理认同。确实，各种配置也许显得很费时间，经常熬夜修改各种环境错误，在 GitHub issue 区到处寻找解答，但是在这一个月里，我与计算机之间的距离仿佛被拉近，内心也萌发了一个关于理想的美好愿望，不如说，这也算是某种缘分吧。
+
+也许在未来的某天，我会切换 macOS 为主力系统；也许在未来的某天，我会回到 vscode，只不过配上了 vim plugin，也许我不能再称自己为一个纯正的 Linux User。但是，有些事物一旦相识，便刻入骨髓了啊。
 
 ## Appendix
 
@@ -22,7 +23,7 @@ tags:
 
   ​ 1. install `gnome-settings-daemon`  
   ​ 2. run `nohup /usr/lib/gsd-xsettings > /dev/null 2>&1 &`  
-  ​ 3. execute `./opt/deepinwine/apps/Deepin-TIM/run.sh`  
+  ​ 3. execute `./opt/deepinwine/apps/Deepin-TIM/run.sh`
 
 - My [dotfiles](https://github.com/raptazure/dotfiles) on GitHub.
 
@@ -47,6 +48,3 @@ tags:
 - `compton` - A compositor for X.
 
 - `neovim` - Hyperextensible Vim-based text editor.
-
-
-
