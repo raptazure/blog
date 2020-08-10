@@ -10,9 +10,10 @@ lang: en
 - Comment System: valine + valine-admin.
 - Style: redesign some part of the blog.
 - Sentence Page: card design, maybe for diary.
-- Night mode support: maybe following system?
-- CI: is it possible to auto switch between "朝" and "夜"?
+- CI: auto switch to "夜" when night comes?
+- Night mode support: add a button / follow system?
+- Alternative: blog name follows bright & dark mode?
 
 <br />
 
-_Notes: I have been busy preparing for exams recently, so the process is slow now..._
+_Notes: I have been busy preparing for exams recently, so the process is relatively slow now..._
