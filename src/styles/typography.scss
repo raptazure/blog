@@ -1,0 +1,53 @@
+$han-font-path: '../../node_modules/han-css/font/';
+
+@font-face {
+  font-family: CELESTE;
+  font-weight: 400;
+  font-style: normal;
+  src:
+    url(../fonts/s-regular.woff2) format('woff2'),
+    url(../fonts/s-regular.woff) format('woff'),
+    url(../fonts/s-regular.ttf) format('opentype'),
+    local(Celeste)
+}
+
+@font-face {
+  font-family: CELESTE;
+  font-weight: 400;
+  font-style: italic;
+  src:
+    url(../fonts/s-italic.woff2) format('woff2'),
+    url(../fonts/s-italic.woff) format('woff'),
+    url(../fonts/s-italic.ttf) format('opentype'),
+    local(Celeste)
+}
+
+@font-face {
+  font-family: CELESTE;
+  font-weight: 700;
+  font-style: normal;
+  src:
+    url(../fonts/s-bold.woff2) format('woff2'),
+    url(../fonts/s-bold.woff) format('woff'),
+    url(../fonts/s-bold.ttf) format('opentype'),
+    local(Celeste)
+}
+
+@font-face {
+  font-family: CELESTE;
+  font-weight: 700;
+  font-style: italic;
+  src:
+    url(../fonts/s-bolditalic.woff2) format('woff2'),
+    url(../fonts/s-bolditalic.woff) format('woff'),
+    url(../fonts/s-bolditalic.ttf) format('opentype'),
+    local(Celeste)
+}
+
+
+
+$han-sans: CELESTE, 'Helvetica Neue', Helvetica, Arial;
+$han-serif: CELESTE, Georgia, 'Times New Roman';
+$han-indent: 1rem;
+
+@import '../../node_modules/han-css/index';
