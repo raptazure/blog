@@ -33,37 +33,20 @@ const HomepageLink = styled(Link)`
   }
 `;
 
-const AboutLink = styled(Link)`
+const NavigationLink = styled(Link)`
   color: ${colors.black};
   font-size: 1rem;
-  margin-right: 1rem;
-
+  margin-left: 1rem;
   &:hover,
   &:focus {
     text-decoration: none;
   }
 `;
 
-const DiaryLink = styled(Link)`
-  color: ${colors.black};
-  font-size: 1rem;
-  margin-right: 1rem;
-
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
-`;
-
-const FriendLink = styled(Link)`
-  color: ${colors.black};
-  font-size: 1rem;
-
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
-`;
+const NavigationBar = styled.div(`
+  display: flex;
+  flex-direction: row;
+`);
 
 interface HeaderProps {
   title: string;
@@ -75,11 +58,12 @@ const Header: React.FC<HeaderProps> = () => (
       <HomepageLink to="/" lang="ja">
         朝の祈り
       </HomepageLink>
-      <span>
-        <AboutLink to="/about">About</AboutLink>
-        <DiaryLink to="/todo">Todo</DiaryLink>
-        <FriendLink to="/friends">Friends</FriendLink>
-      </span>
+      <NavigationBar>
+        <NavigationLink to="/about">About</NavigationLink>
+        <NavigationLink to="/todo">Todo</NavigationLink>
+        <NavigationLink to="/rss.xml">RSS</NavigationLink>
+        <NavigationLink to="/friends">Friends</NavigationLink>
+      </NavigationBar>
     </HeaderInner>
   </StyledHeader>
 );
