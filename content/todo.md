@@ -6,7 +6,7 @@ lang: en
 
 **This project is under long-term development and PRs are welcomed.**
 
-- About Page: resume + migrate lyrics
+- About Page: add resume link and pdf.
 - Comment System: valine + valine-admin.
 - Style: redesign some part of the blog.
 - Sentence Page: card design, maybe for diary.

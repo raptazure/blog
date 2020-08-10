@@ -5,6 +5,8 @@ tags:
   - thoughts
 ---
 
+import Annotation, { Highlight, Box, Circle, Underline } from "@/components/Annotation";
+
 现在你所看到的，已经是个人博客的第三代啦。上一次迁移是在五月末，到今天也不过才两个多月的时间，但自己的思想却在这期间发生了很大转变。这主要缘于当初所做的决定：尝试在 Twitter / GitHub / Blog 上交朋友，如果没有迈出这一步，没有勇气去看看更大的世界，没有机会认识大家的话，很难想象自己现在又会在干什么。每当此时，便愈发体会到社交圈子与朋友们对一个人的影响之大。
 
 但那是另一个故事了，估计下半年的某一天会独自拿出来写一篇博文聊聊这一年里与朋友们相遇的幸运以及对我产生的影响吧。在这里，我想先来说一说关于博客的一些事情。
@@ -18,3 +20,15 @@ tags:
 [^2nd]: [Repository of the 2nd generation of my blog](https://github.com/raptazure/aurora)
 
 这是一个新的开始，不管是样式还是文字，一切表达都将更加贴近自己的内心。听着旋律极简的新古典钢琴曲，在也许并不能看到月亮的深夜，我写下这些文字。
+
+> **<Box>TODOs</Box>** - last updated at 2020-08-11 12:39 AM
+>
+> - About Page: add resume link and pdf.
+> - Comment System: valine + valine-admin.
+> - Style: redesign some part of the blog.
+> - Sentence Page: card design, maybe for diary.
+> - CI: auto switch to "夜" when night comes?
+> - Night mode support: add a button / follow system?
+> - Alternative: blog name follows bright & dark mode?
+>
+> **Notes: This project is under long-term development and PRs are welcomed.**
