@@ -24,13 +24,16 @@ lang: en
           <a href="https://bc-li.github.io/">Forest Zone</a>
          </div>
          <div>
-          <a href="https://lhd-code.github.io/">leolanger</a>
+          <a href="https://lhd-code.github.io/">Leolanger</a>
          </div>
          <div>
           <a href="https://twic.me">Twikor</a>
          </div>
          <div>
           <a href="https://vaala.cat/">Vaala</a>
+         </div>
+         <div>
+          <a href="https://xsun.io/">Xsun</a>
          </div>
       </td>
       <td style="border: 0px;">
