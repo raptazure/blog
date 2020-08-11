@@ -10,7 +10,7 @@ A developer and creator.
 A piano, anime, tarot lover.  
 INFP / Enneagram Type 4w5.
 
-Find me on [GitHub](https://github.com/raptazure) | [Twitter](https://twitter.com/raptazure) | [Instagram](https://www.instagram.com/raptazure/) | [Email](raptazure@foxmail.com) | [RSS](https://raptazure.github.io/rss.xml)
+Find me on [GitHub](https://github.com/raptazure) | [Twitter](https://twitter.com/raptazure) | [Instagram](https://www.instagram.com/raptazure/) | [Email](mailto:raptazure@foxmail.com) | [RSS](https://raptazure.github.io/rss.xml)
 
 <br />
 
