@@ -84,7 +84,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: 'https://qjx.app'
+        siteUrl: 'https://raptazure.github.io'
       }
     },
     {

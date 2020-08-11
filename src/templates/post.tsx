@@ -9,6 +9,7 @@ import Time from '@/components/Time';
 import Tag from '@/components/Tag';
 import Container from '@/components/Container';
 import IndexLayout from '@/layouts';
+import { Utterances } from '@/components/Utterances';
 
 const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => (
   <IndexLayout>
@@ -28,6 +29,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => (
             <MDXRenderer>{data.mdx.body}</MDXRenderer>
           </MDXProvider>
         </article>
+        <Utterances repo="raptazure/comment" />
       </Container>
     </Page>
   </IndexLayout>
