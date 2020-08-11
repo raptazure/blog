@@ -61,7 +61,6 @@ const Header: React.FC<HeaderProps> = () => (
       <NavigationBar>
         <NavigationLink to="/about">About</NavigationLink>
         <NavigationLink to="/todo">Todo</NavigationLink>
-        <NavigationLink to="/rss.xml">RSS</NavigationLink>
         <NavigationLink to="/friends">Friends</NavigationLink>
       </NavigationBar>
     </HeaderInner>
