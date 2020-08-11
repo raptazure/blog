@@ -22,13 +22,13 @@ import Annotation, { Highlight, Box, Circle, Underline } from "@/components/Anno
 这是一个新的开始，不管是样式还是文字，一切表达都将更加贴近自己的内心。听着旋律极简的新古典钢琴曲，在也许并不能看到月亮的深夜，我写下这些文字。
 
 > **<Box>TODOs</Box>** - last updated at 2020-08-11 12:39 AM
->
+> 
+> - Comment System: utterances.
 > - About Page: add resume link and pdf.
-> - Comment System: valine + valine-admin.
 > - Style: redesign some part of the blog.
 > - Sentence Page: card design, maybe for diary.
 > - CI: auto switch to "夜" when night comes?
-> - Night mode support: add a button / follow system?
-> - Alternative: blog name follows bright & dark mode?
+> - Dark mode support: follow system / add a button?
+> - Nightly: blog-name & utterances-theme for dark mode?
 >
 > **Notes: This project is under long-term development and PRs are welcomed.**
