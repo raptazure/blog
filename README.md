@@ -25,4 +25,4 @@
 
 <br />
 
-*🌙 Spcial thanks - [imtsuki](https://github.com/imtsuki)*
+*🌙 Special thanks - [imtsuki](https://github.com/imtsuki)*
