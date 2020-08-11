@@ -2,7 +2,7 @@
 
 ```
 branches: 
-  - dev: source code (default)
+  - dev: source code & about (default)
   - gh-pages: build & host
   - master: branch description
 ```
