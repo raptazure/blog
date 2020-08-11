@@ -31,5 +31,5 @@ export const Utterances: React.FC<CommentProps> = ({ repo }) => {
     rootElm.current!.appendChild(utterances);
   }, []);
 
-  return <div className="utterances" ref={rootElm} />;
+  return <div className="utterances" style={{ top: 50 }} ref={rootElm} />;
 };
