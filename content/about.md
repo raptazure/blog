@@ -6,11 +6,11 @@ lang: en
 
 import Resume from "@/components/Resume";
 
-SE undergraduate @HIT-19 / Coding with ♡     
-prisma visions tarot / minimalist piano / anime   
+SE undergraduate @HIT-19 / Coding with ♡  
+prisma visions tarot / minimalist piano / anime  
 INFP / Enneagram Type 4w5
 
-[GitHub](https://github.com/raptazure) | [Twitter](https://twitter.com/raptazure) | [Instagram](https://www.instagram.com/raptazure/) | [Email](mailto:raptazure@foxmail.com) | [RSS](https://raptazure.github.io/rss.xml)
+[GitHub](https://github.com/raptazure) | [Twitter](https://twitter.com/raptazure) | [Instagram](https://www.instagram.com/raptazure/) | [Email](mailto:hermit0x9@outlook.com) | [RSS](https://raptazure.github.io/rss.xml)
 
 <br />
 
