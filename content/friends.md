@@ -55,6 +55,9 @@ lang: en
         <div>
           <a href="https://blog.badapple.pro">东方幻梦</a>
         </div>
+        <div>
+          <a href="https://linux.dog/">蕾咪io</a>
+        </div>
       </td>
     </tr>
   </table>
