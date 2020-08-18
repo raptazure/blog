@@ -60,7 +60,6 @@ const Header: React.FC<HeaderProps> = () => (
       </HomepageLink>
       <NavigationBar>
         <NavigationLink to="/about">About</NavigationLink>
-        <NavigationLink to="/todo">Todo</NavigationLink>
         <NavigationLink to="/friends">Friends</NavigationLink>
       </NavigationBar>
     </HeaderInner>
