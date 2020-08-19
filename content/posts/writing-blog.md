@@ -15,7 +15,7 @@ import Annotation, { Highlight, Box, Circle, Underline } from "@/components/Anno
 
 [^1st]: [Repository of the 1st generation of my blog](https://github.com/raptazure/hexo-blog)
 
-接下来的两个月，我在博客上继续交换了一些友链。然而，这次的迁移[^2nd]更像是来到了一个华丽缤纷的幻想世界，虽然幻想是我的常态，但极简主义更是我一直以来崇尚的风格，便又产生了不安定的念头。恰巧，推友（其实是 Twitter / GitHub / Instagram / Zhihu 等都互关了的朋友，是低调的大佬） [imtsuki](https://github.com/imtsuki) 安利了一篇自己的文章 [「我们在做什么？我们该何去何从？」](https://qjx.app/posts/where-shall-we-go/)。在感知文字所传达的思想，受到种种启发之余，我也被博客的整体风格吸引了。简洁的色彩搭配，加上 macOS 的 Night Shift，表现出一种朴素的纸质美，沉稳却又风雅的字体给人一种积淀许久却又灵动飘逸的印象，加上技术栈是 React + TypeScript，不由得让我产生了第二次迁移博客的动机。这一次只保留了关于 Linux 的那篇富有纪念意义文章，一切几乎从零开始。同时，出于个性化定制的考虑，也将许多的 [TODO](https://raptazure.github.io/todo) 引入了日程。
+接下来的两个月，我在博客上继续交换了一些友链。然而，这次的迁移[^2nd]更像是来到了一个华丽缤纷的幻想世界，虽然幻想是我的常态，但极简主义更是我一直以来崇尚的风格，便又产生了不安定的念头。恰巧，推友 [imtsuki](https://github.com/imtsuki) 安利了一篇自己的文章 [「我们在做什么？我们该何去何从？」](https://qjx.app/posts/where-shall-we-go/)，在感知文字所传达的思想，受到种种启发之余，我也被博客的整体风格吸引了。简洁的色彩搭配，加上 macOS 的 Night Shift，表现出一种朴素的纸质美，沉稳却又风雅的字体给人一种积淀许久却又灵动飘逸的印象，加上技术栈是 React + TypeScript，不由得让我产生了第二次迁移博客的动机。这一次只保留了关于 Linux 的那篇富有纪念意义文章，一切几乎从零开始。同时，出于个性化定制的考虑，也将许多的 [TODO](https://raptazure.github.io/todo) 引入了日程。
 
 [^2nd]: [Repository of the 2nd generation of my blog](https://github.com/raptazure/aurora)
 
