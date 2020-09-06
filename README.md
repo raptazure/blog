@@ -22,7 +22,3 @@
 - [ ] Dark mode support: follow system / add a button?
 - [ ] Nightly: blog-name & utterances-theme for dark mode?
 - [ ] ...
-
-<br />
-
-*🌙 Special thanks - [imtsuki](https://github.com/imtsuki)*
