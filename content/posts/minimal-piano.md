@@ -1,5 +1,5 @@
 ---
-title: Minimalist piano
+title: Minimalist Piano
 date: 2020-08-18
 tags:
   - music

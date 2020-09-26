@@ -1,5 +1,5 @@
 ---
-title: MIT 6.824 - Distributed Systems
+title: 6.824 Distributed Systems
 date: 2020-08-22
 tags:
   - computer science
