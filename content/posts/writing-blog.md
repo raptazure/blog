@@ -32,3 +32,5 @@ import Annotation, { Highlight, Box, Circle, Underline } from "@/components/Anno
 > - Nightly: blog-name & utterances-theme for dark mode?
 >
 > **Notes: This project is under long-term development and PRs are welcomed.**
+
+关于开发环境配置：如果在 Windows 下运行 `npm install` `gatsby develop` 提示 `\node_modules\han-css\src\sass\inline\_jiya.sass` 中有语法错误，则需要在此文件第 73 行后创建新行，缩进并添加 `display: none`，macOS 下未发现此问题。

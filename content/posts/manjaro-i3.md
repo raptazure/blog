@@ -15,10 +15,29 @@ tags:
 
 也许在未来的某天，我会切换 macOS 为主力系统；也许在未来的某天，我会回到 vscode，只不过配上了 vim plugin，也许我不能再称自己为一个纯正的 Linux User。但是，有些事物一旦相识，便刻入骨髓了啊。
 
-## Appendix
+## Some Notes
 
-### Special Notes
+- 切换镜像源：  
+  `sudo pacman-mirrors -i -c China -m rank`   
+  `sudo pacman -Syy` `sudo vim /etc/pacman.conf`
+  ```
+  [archlinuxcn]
+  SigLevel = Optional TrustedOnly
+  Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn/$arch
+  ```
+  `sudo pacman -S archlinuxcn-keyring` `sudo pacman -Syyu`
+- 安装输入法：`yay -S ibus-rime`  
+  `ibus-setup`，选择 Input > Add > Chinese > Rime  
+  `vim ~/.xprofile`
+  ```
+  export GTK_IM_MODULE=ibus
+  export XMODIFIERS=@im=ibus
+  export QT_IM_MODULE=ibus
+  ibus-daemon -x -d
+  ```
 
+- 运行 `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh` 时报错 `curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to sh.rustup.rs:443`，关闭当前网络的 IPv6 连接之后重试。
+- 代理：使用 [Clashy](https://github.com/SpongeNobody/Clashy) 和 [CordCloud](https://www.cordcloud.site/)，终端设置同 [macOS](https://github.com/raptazure/aurora/issues/13)
 - TIM on i3wm: `pacman -S deepin.com.qq.office`
 
   ​ 1. install `gnome-settings-daemon`  
@@ -26,8 +45,8 @@ tags:
   ​ 3. execute `./opt/deepinwine/apps/Deepin-TIM/run.sh`
 
 - My [dotfiles](https://github.com/raptazure/dotfiles) on GitHub.
-
-### List of Softwares
+  
+## Appendix
 
 - `fish` - A smart and user-friendly command shell for Linux.
 
