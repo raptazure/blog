@@ -36,6 +36,9 @@ lang: en
           <a href="https://twic.me">Twikor</a>
          </div>
          <div>
+          <a href="http://kevinfly.com/">Kevin</a>
+         </div>
+         <div>
           <a href="https://vaala.cat/">Vaala</a>
          </div>
          <div>
