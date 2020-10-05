@@ -64,3 +64,6 @@ Threading challenges:
 - Deadlock: cycles via locks and/or communication (e.g. RPC or channels)
 
 ### Remote Procedure Call
+
+- RPC is a powerful technique for constructing distributed, client-server based applications. It is based on extending the conventional local procedure calling so that the called procedure need not exist in the same address space as the calling procedure. The two processes may be on the same system, or they may be on different systems with a network connecting them.
+- Goal: easy-to-program client/server communication, hide details of network protocols, convert data (strings, arrays, maps, &c) to wire format.
