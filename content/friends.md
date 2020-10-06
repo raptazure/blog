@@ -56,6 +56,9 @@ lang: en
           <a href="https://blog.badapple.pro">东方幻梦</a>
         </div>
         <div>
+          <a href="https://blog.lenva.tech">过期薯条</a>
+        </div>
+        <div>
           <a href="https://chanshiyu.com">蝉时雨</a>
         </div>
         <div>
