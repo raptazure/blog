@@ -5,10 +5,12 @@
 **This project is under long-term development and PRs are welcomed.**
 
 ### 🌸 れ
+
 - Support utterances and RSS. Minimalism.
 - Built with Gatsby / React / TypeScript.
 
 ### 🌈 め
+
 - Welcome to exchange ideas, thoughts and friend links.
 - Comment your blog's url on any of my posts and I'll add it to the [friends](https://raptazure.github.io/friends) page.
 
@@ -17,8 +19,6 @@
 - [x] Comment System: utterances.
 - [ ] About Page: add resume link and pdf.
 - [ ] Style: redesign some part of the blog.
-- [ ] Sentence Page: card design, maybe for diary.
-- [ ] CI: auto switch to "夜" when night comes?
 - [ ] Dark mode support: follow system / add a button?
 - [ ] Nightly: blog-name & utterances-theme for dark mode?
 - [ ] ...
