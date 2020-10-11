@@ -6,7 +6,8 @@ lang: en
 
 import Resume from "@/components/Resume";
 
-SE undergraduate @HIT-19  
+SE undergraduate @HIT-19   
+founder of Hitrust and lambda-magic  
 Interested in distributed systems and PLT  
 prisma visions tarot / minimalist piano / touhou  
 INFP (Fi - Ne - Ti - Se) / Enneagram Type 4w5
