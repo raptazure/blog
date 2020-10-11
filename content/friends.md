@@ -9,7 +9,7 @@ lang: en
     <tr>
       <td style="border: 0px;">
         <div>
-          <a href="http://www.h1trust.github.io">Hitrust</a>
+          <a href="http://h1trust.github.io">Hitrust</a>
         </div>
         <div>
           <a href="http://www.lionad.art">Lionad</a>
