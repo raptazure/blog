@@ -24,6 +24,9 @@ lang: en
           <a href="https://leolanger.github.io/">Leolanger</a>
         </div>
         <div>
+          <a href="https://cloudifold.github.io/MyBlog/">Cloudifold</a>
+        </div>
+        <div>
           <a href="https://ray-eldath.me/">Ray Eldath</a>
         </div>
         <div>
