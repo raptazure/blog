@@ -6,11 +6,11 @@ lang: en
 
 import Resume from "@/components/Resume";
 
-SE undergraduate @HIT-19   
-founder of Hitrust and lambda-magic  
-Interested in distributed systems and PLT  
-prisma visions tarot / minimalist piano / touhou  
-INFP (Fi - Ne - Ti - Se) / Enneagram Type 4w5
+Sophomore undergrad    
+| Creator of Hitrust and λ-magic  
+| Interested in classical music and PLT  
+| Haskeller, Rustacean  
+| INFP ++ Ti 
 
 [GitHub](https://github.com/raptazure) | [Twitter](https://twitter.com/raptazure) | [Instagram](https://www.instagram.com/raptazure/) | [Email](mailto:hermit0x9@outlook.com) | [RSS](https://raptazure.github.io/rss.xml)
 
