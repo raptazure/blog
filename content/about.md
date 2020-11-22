@@ -8,8 +8,8 @@ import Resume from "@/components/Resume";
 
 Sophomore undergrad    
 | Creator of Hitrust and λ-magic  
-| Interested in classical music and PLT  
-| Haskeller, Rustacean  
+| Haskell & ML family   
+| Touhou, Deemo  
 | INFP ++ Ti 
 
 [GitHub](https://github.com/raptazure) | [Twitter](https://twitter.com/raptazure) | [Instagram](https://www.instagram.com/raptazure/) | [Email](mailto:hermit0x9@outlook.com) | [RSS](https://raptazure.github.io/rss.xml)
@@ -18,31 +18,42 @@ Sophomore undergrad
 
 <div lang="ja">
 
-> 砂ぼこり運ぶつむじ風  
-> 洗濯物に縮まりますが  
-> 昼前の空の白い月は  
-> なんだかきれいで見とれました  
-> 夾雜沙塵的風  
-> 蜷縮了晾著的衣物  
-> 白晝天空裡的白色月亮  
-> 看起來是那麼的美麗
+> 小さな掌に 溢れた淡い光  
+> 見上げた遠い空 瞬く箒星  
+> 夜に描く幻視の軌道 揺らめいて  
+> 見果てぬ地平に光が灯る  
+> 確かないのちの在処を示す  
 
 ·
 
-> 上手くはいかぬこともあるけれど  
-> 天を仰げばそれさえ小さくて  
-> 總有不順遂的時候  
-> 但只要仰望著天就會覺得微不足道
+> 飛び続けるのに疲れたのなら  
+> 今宵も踊ろう月明かりの下  
+> まだ見えない夢を 夜風に求めて  
+> 眩い街路灯 見えない星の影  
+> 伸ばした細い腕 半分の三日月  
 
 ·
 
-> 青い空は凛と澄んで  
-> 羊雲は静かに揺れる  
-> 花咲くを持つ喜びを  
-> 分かち合えるのであれば それは幸せ  
-> 湛藍的天空冷冽清澈  
-> 毛捲雲靜靜的飄著  
-> 等待花開的那份喜悅  
-> 能夠相互理解該有多幸福
+> 夜に巣食うネオンの軌跡 見つめてた  
+> 眠らない街に光が点る  
+> 確かないのちの在処を示す  
+> 開いた掌頼りなくとも  
+> 今宵も踊ろう摩天楼の陰  
+> ただ儚い願い それでも信じて  
+
+·
+
+> 二つの影法師 二人の舞踏会  
+> 広げた翅 世界を巡り 煌めく  
+> 果て無き夜空に光が燈る  
+> あらゆるいのちの在処を示す  
+> 今宵も踊ろう終わらない夜  
+> 繋いだ温もり忘れないからね  
+> まだ小さな手でも 輝く彗星  
+
+·
+
+> 夜螢光 ～ Auld Lang Syne  
+> 幻視の夜 ～ Ghostly Eyes
 
 </div>

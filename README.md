@@ -1,4 +1,4 @@
-# 朝の祈り
+# 永遠亭
 
 > [The 3rd generation of my blog](https://raptazure.github.io/posts/writing-blog/)
 
