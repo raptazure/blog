@@ -1,5 +1,5 @@
 ---
-title: The 3rd generation of my blog
+title: The 3rd Blog
 date: 2020-08-10
 tags:
   - thoughts
