@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Raptazure',
-    description: '朝の祈り',
+    description: '魔法の森',
     keywords: 'blog, gatsbyjs, computer-science',
     siteUrl: 'https://raptazure.github.io',
     lang: 'zh-Hans',
@@ -90,8 +90,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: '朝の祈り',
-        short_name: '朝の祈り',
+        name: '魔法の森',
+        short_name: '魔法の森',
         start_url: '/',
         background_color: '#ffffff',
         theme_color: '#ffffff',
@@ -146,7 +146,7 @@ module.exports = {
               }
               `,
             output: '/rss.xml',
-            title: `朝の祈り | RSS Feed`,
+            title: `魔法の森 | RSS Feed`,
             site_url: `https://raptazure.github.io`
           }
         ]

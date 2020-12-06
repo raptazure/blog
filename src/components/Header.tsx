@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = () => (
   <StyledHeader>
     <HeaderInner>
       <HomepageLink to="/" lang="ja">
-        永遠亭
+        魔法の森
       </HomepageLink>
       <NavigationBar>
         <NavigationLink to="/about">About</NavigationLink>
