@@ -4,12 +4,10 @@ title: Me...
 lang: en
 ---
 
-import Resume from "@/components/Resume";
+<!-- import Resume from "@/components/Resume"; -->
 
-Sophomore undergrad    
-| Creator of Hitrust and λ-magic  
+| Creator of lambda-magic   
 | Haskell & ML family   
-| Touhou, Deemo  
 | INFP ++ Ti 
 
 [GitHub](https://github.com/raptazure) | [Twitter](https://twitter.com/raptazure) | [Instagram](https://www.instagram.com/raptazure/) | [Email](mailto:hermit0x9@outlook.com) | [RSS](https://raptazure.github.io/rss.xml)
