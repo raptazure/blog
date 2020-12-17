@@ -210,3 +210,275 @@ fun max1 (xs : int list) =
 3. Idioms (typical patterns for using language features to express the computation)
 4. Libraries
 5. Tools
+
+### Building Compound Types
+
+Three most important type building-blocks in any language:
+1. Each of: A `t` value contains values of each of `t1 t2 ... tn`. Such as tuples and records (idea of syntactic sugar and connection with tuples).
+2. One of: A `t` value contains values of ont of `t1 t2 ... tn`. Such as option and a type that contains an int or string (will lead to pattern-matching).
+3. Self reference: A `t` value can refer to other `t` values.
+
+### Records
+
+1. Record values have fields (any name) holding values `{f1 = v1, ... , fn = vn}`. Record types have fields holding types `{f1 : t1, ..., fn : tn}`. The order of fields in a record value of type never matters. REPL alphabetizes fields just for consistency.
+2. Building records: `{f1 = e1, ..., fn = en}`
+3. Accessing pieces: `#myfieldname e`
+4. Evaluation rules and type-checking as expected.
+5. A common decision for a construct's syntax is whether to refer to things by position (as in tuples) or by some (field) name (as with records).
+   - A common hybrid is like with Java method arguments (and ML functions are used so far):
+     - Caller uses position
+     - Callee uses variables
+     - Could do it differently
+6. Tuples are just syntactic sugar for records with fields named 1, 2, ...
+   - Syntactic: Can describe the semantics entirely by the corresponding record syntax.
+   - They simplify understanding / implementing the langauge.
+
+### Datatype Bindings
+
+1. A way to make one-of types: 
+   - A `datatype` binding
+  ```sml
+  datatype mytype = 
+    TwoInts of int * int
+    | Str of string
+    | Pizza
+  ```
+  - Adds a new type `mytype` to the environment
+  - Adds constructors to the environment: `TwoInts`, `Str` and `Pizza`
+    - `TwoInts : int * int -> mytype`
+    - `Str : string -> mytype`
+    - `Pizza : mytype`
+2. A constructor is (among other things), a **function** that makes values of the new type (or is a value of the new type):
+  - Any value of type `mytype` is made from one of the constructors.
+  - The value contains:
+    - A tag for which constructor (e.g. TwoInts)
+    - The corresponding data (e.g. (7, 9)) 
+3. In many other contexts, these datatypes are called tagged unions.
+4. There are two aspects to accessing a datatype value:
+   - Check what variant it is (what constructor made it). `null` and `isSome` check variants.
+   - Extract the data (if that variant has any). `hd` `tl` `valOf` extract data (raise exception on wrong variant).
+5. Useful datatypes:
+   - Enumerations, including carrying other data.
+   - Alternate ways of identifying real-world things/people.
+   - Expression trees. This is an example using self-reference:
+    ```sml
+    datatype exp = 
+      Constant of int
+      | Negate of exp
+      | Add of exp * exp
+      | Multiply of exp * exp
+
+    (* functions over recursive datatypes are usually recursive *)
+
+    fun eval e = 
+      case e of 
+        Constant i => i
+        | Negate e2 => ~ (eval e2)
+        | Add (e1, e2) => (eval e1) + (eval e2)
+        | Multiply (e1, e2) => (eval e1) * (eval e2)
+
+    fun number_of_adds e = 
+      case e of
+        Constant i => 0
+        | Negate e2 => number_of_adds e2
+        | Add (e1, e2) => 1 + number_of_adds e1 + number_of_adds e2
+        | Multiply (e1, e2) => number_of_adds e1 + number_of_adds e2
+    ```
+    - Lists and Options are datatypes.
+    ```sml
+    datatype my_int_list = Empty | Cons of int * my_int_list
+
+    fun inc_or_zero intoption = 
+      case intoption of
+        NONE => 0
+        | SOME i => i + 1
+
+    fun append (xs, ys) =
+      case xs of
+        [] => ys
+        | x :: xs' => x :: append (xs', ys)
+    ```
+6. Polymorphic Datatypes:
+   - Syntax: put one or more type variables before datatype name. Can use these type variables in constructor definitions. Binding then introduces a type constructor, not a type. (Must say `int mylist`, `'a mylist`, not `mylist`).
+  ```sml
+  datatype 'a mylist = Empty | Cons of 'a * 'a mylist
+
+  datatype ('a, 'b) tree = 
+    Node of 'a * ('a, 'b) tree * ('a, 'b) tree
+    | Leaf of 'b
+  ```
+  - Use constructors and case expressions as usual. No change to evaluation rules. Type-checking will make sure types are used consistently. For example, cannot mix element types of list. Functions will be polymorphic or not based on how data is used.
+
+### Case Expressions
+
+1. ML combines the two aspects of accessing a one-of value with a case expression and pattern-matching.
+
+```sml
+fun f (x : mytype) = 
+  case x of
+    Pizza => 3
+    | Str s => 8
+    | TwoInts (i1, i2) => i1 + i2
+```
+
+- A multi-branch conditional to pick branch based on variant.
+- Extracts data and binds to variables local to that branch.
+- Type-checking: all branches must have same type.
+- Evaluation: evaluate between case ... of and the right branch.
+- Patterns are not expressions: We do not evaluate them. We see if the result of `e0` matches them.
+
+### Type Synonyms
+
+1. Creating new types:
+- A datatype binding introduces a new type name.
+  - Distinct from all existing types.
+  - Only way to create values of the new type is the constructors.
+- A type synonym is a new kind of binding `type aname = t`.
+  - Just creates another name for a type.
+  - The type and the name are interchangeable in every way.
+  - Do not worry about that REPL prints: picks what it wants just like it picks the order of record field names.
+2. A convenience for talking about types. Related to modularity.
+
+### Each of Pattern Matching
+
+1. Pattern matching also works for records and tuples.
+2. Val-binding patterns: variables are just one kind of pattern. 
+3. A function argument can also be a pattern. What we call multi-argument functions are just functions taking one tuple argument, implemented with a tuple pattern in the function binding. Zero arguments is the unit pattern () matching the unit value ().
+
+```sml
+fun sum_triple triple = 
+  case triple of
+    (x, y, z) => x + y + z
+
+fun sum_triple1 triple = 
+  let val (x, y, z) = triple
+  in
+    x + y + z
+  end
+
+fun sum_triple2 (x, y, z) = x + y + z
+```
+
+### Polymorphic and Equality types
+
+1. The **more general** rule: A type t1 is more general than the type t2 if you can take t1, replace its type variables consistently, and get t2.
+- Example: replace each `'a` with `int * int`
+- Example: replace each `'b` with `'a` and each `'a` with `'a`
+2. Can combine the **more general** rule with rules for equivalence:
+- Use of type synonyms does not matter
+- Order of field names does not matter
+3. Type variables with a second quote such as `''a list * ''a -> bool` are **equality types** that arise from using the = operator. The = operator works on lots of types: int, string, tuples containing all equality types... But not all types: function types, real...
+4. The rules for more general are exactly the same except you have to replace an equality-type variable with a type taht can be used with =.
+
+```sml
+(* ''a * ''a -> string *)
+fun same_thing (x, y) =
+  if x = y then "yes" else "no"
+```
+
+### Nested Patterns
+
+```sml
+fun zip list_triple =
+  case list_triple of
+    ([], [], []) => []
+    | (hd1 :: tl1, hd2 :: tl2, hd3 :: tl3) => 
+      (hd1, hd2, hd3) :: zip (tl1, tl2, tl3)
+    | _ => raise ListLengthMismatch
+
+fun unzip lst = 
+  case lst of
+    [] => ([], [], [])
+    | (a, b, c) :: tl => 
+      let val (l1, l2, l3) = unzip tl
+      in (a :: l1, b :: l2, c :: l3) end
+
+fun multsign (x1, x2) = (* int * int -> sgn *)
+  let fun sign x = if x = 0 then Z else if x > 0 then P else N
+  in
+    case (sign x1, sign x2) of
+      (Z, _) => Z
+    | (_, Z) => Z
+    | (P, P) => P
+    | (N, N) => P
+    | (N, P) => N
+    | (P, N) => N
+  end
+```
+
+1. We can nest patterns as deep as we want. The full meaning of pattern matching is to compare a pattern against a value for the same shape and bind variables to the right parts.
+2. A common idiom is matching against a tuple of datatypes to compare them.
+3. Wildcards are good style: use them instead of variables when you do not need the data.
+4. The semantics for pattern-matching takes a pattern p and a value v and decides does it match and if so what variable bindings are introduced. Since patterns can nest, the definition is elegantly recursive, with a separate rule for each kind of pattern.
+5. Function patterns: syntactic sugar of case expression.
+
+```sml
+fun f p1 = e1
+  | f p2 = e2
+  | f pn = en
+
+fun append ([], ys) = ys
+  | append (x :: xs', ys) = x :: append (xs', ys)
+```
+
+### Exceptions
+
+```sml
+fun maxlist (xs, ex) = (* int list * exn -> int *)
+  case xs of
+    [] => raise ex
+  | x :: [] => x
+  | x :: xs' => Int.max(x, maxlist (xs', ex))
+
+exception MyException of int * int
+exception MySimpleException
+
+val x = maxlist ([3, 4, 5], MySimpleException)
+        handle MySimpleException => 0
+
+val w = maxlist ([], MyException (2, 3))
+        handle MyException (x, y) => x + y
+```
+
+1. Exceptions are a lot like datatype constructors.
+2. Declaring an exception makes adds a constructor for type `exn`.
+3. Can pass values of `exn` anywhere (e.g. function arguments).
+4. Handle can have multiple branches with patterns for type `exn`.
+
+### Tail Recursion
+
+```sml
+fun fact n = 
+  let fun aux (n, acc) =
+    if n = 0
+    then acc
+    else aux (n - 1, acc * n)
+  in aux (n, 1) end
+
+fun rev' xs = 
+  case xs of
+    [] => []
+  (* append must traverse the first list *)
+  | x :: xs' => (rev' xs') @ [x]
+
+fun rev xs = 
+  let fun aux (xs, acc) =
+    case xs of
+      [] => acc
+    | x :: xs' => aux (xs', x :: acc)
+  in aux (xs, []) end
+```
+
+1. While a program runs, there is a call stack of function calls that have started but not yet returned.
+- Calling a function f pushes an instance of f on the stack.
+- When a call to f finished, it is popped from the stack.
+- These stack-frames store information like the value of local variables and what is left to do in function. Due to recursion, multiple stack-frames may be calls to the same function.
+2. An optimization: It is unnecessary to keep around a stack-frame just so it can get a callee's result and return it without any further evaluaion. ML recognizes these tail calls in the compiler and treats them differently:
+- Pop the caller before the call, allowing callee to reuse the same stack space (tail-calls: nothing left for caller to do, so the pop caller).
+- Along with other optimizations, as efficient as a loop.
+![](../images/sml/tail.png)
+3. Accumulators for tail recursion: 
+- Tail-recursive: recursive calls are tail-calls.
+- A methodology that can often guide this transformation: Create a helper function that takes an accumulator. Old base case becomes initial accumulator. New base case becomes final accumulator.
+4. There are certainly cases where recursive functions cannot be evaluated in a constant amount of space. Most obvious examples are functions that process trees. In these cases, the natural recursive approach is the way to go.
+5. A tail call is a function call in tail position. If an expression is not in tail position, then no subexpressions are. The nothing left for caller to do intuition usually suffices.
