@@ -65,7 +65,130 @@ fun max (xs : int list) =
     in if isSome tl_ans andalso valOf tl_ans &gt; hd xs
       then tl_ans
       else SOME (hd xs)
-    end</code></pre></div><ol><li>Building: <code class="language-text">NONE</code> has type <code class="language-text">&#x27;a option</code>, <code class="language-text">SOME e</code> has type <code class="language-text">t option</code> if <code class="language-text">e</code> has type <code class="language-text">t</code>.</li><li>Accessing: <code class="language-text">isSome</code> has type <code class="language-text">&#x27;a option -&gt; bool</code>, <code class="language-text">valOf</code> has type <code class="language-text">&#x27;a option -&gt; &#x27;a</code>  (exception if given <code class="language-text">NONE</code>).</li></ol><h3>Booleans and Comparison Operations</h3><ol><li>Syntax: <code class="language-text">e1 andalso e2</code>, <code class="language-text">e1 orelse e2</code>, <code class="language-text">not e1</code>.</li><li>Short-circuiting evaluation means <code class="language-text">andalso</code> and <code class="language-text">orelse</code> are not functions, but <code class="language-text">not</code> is just a pre-defined function.</li><li><code class="language-text">=</code> <code class="language-text">&lt;&gt;</code> can be used with any equality type but not with <code class="language-text">real</code>.</li></ol><h3>No Mutation: ML vs. Imperative Languages</h3><ol><li>In ML, we create aliases all the time without thinking about it because it is impossible to tell where there is aliasing.<ul><li>Example: <code class="language-text">tl</code> is constant time; does not copy rest of the list.</li><li>So do not worry and focus on the algorithm.</li></ul></li><li>In language with mutable data (e.g. Java), programmers are obsessed with aliasing and object identity.<ul><li>They have to be (!) so that subsequent assignments affect the right parts of the program.</li><li>Often crucial to make copies in just the right places.</li></ul></li><li>Reference (alias) vs. copy does not matter if code is immutable.</li></ol><h3>Pieces of a Language</h3><ol><li>Syntax</li><li>Semantics (evaluation rules)</li><li>Idioms (typical patterns for using language features to express the computation)</li><li>Libraries</li><li>Tools</li></ol></article><div class="utterances" style="top:50px"></div></div></div></main><footer class="css-1wvahdb e1v9gu3l0"><style data-emotion-css="voneje">.css-voneje{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><style data-emotion-css="1u3kyku">.css-1u3kyku{position:relative;margin-left:auto;margin-right:auto;width:auto;max-width:40em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><div class="e1v9gu3l1 css-1u3kyku eqdtqc0"><style data-emotion-css="19sj128">.css-19sj128{color:rgba(0,0,0,0.54);font-size:0.8rem;}.css-19sj128:hover,.css-19sj128:focus{-webkit-text-decoration:none;text-decoration:none;}</style><a class="css-19sj128 e1v9gu3l2" href="/about">Copyright © <!-- -->2020<!-- --> <!-- -->raptazure<!-- -->. Built with Gatsby.</a></div></footer></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-128956609-1"></script><script>
+    end</code></pre></div><ol><li>Building: <code class="language-text">NONE</code> has type <code class="language-text">&#x27;a option</code>, <code class="language-text">SOME e</code> has type <code class="language-text">t option</code> if <code class="language-text">e</code> has type <code class="language-text">t</code>.</li><li>Accessing: <code class="language-text">isSome</code> has type <code class="language-text">&#x27;a option -&gt; bool</code>, <code class="language-text">valOf</code> has type <code class="language-text">&#x27;a option -&gt; &#x27;a</code>  (exception if given <code class="language-text">NONE</code>).</li></ol><h3>Booleans and Comparison Operations</h3><ol><li>Syntax: <code class="language-text">e1 andalso e2</code>, <code class="language-text">e1 orelse e2</code>, <code class="language-text">not e1</code>.</li><li>Short-circuiting evaluation means <code class="language-text">andalso</code> and <code class="language-text">orelse</code> are not functions, but <code class="language-text">not</code> is just a pre-defined function.</li><li><code class="language-text">=</code> <code class="language-text">&lt;&gt;</code> can be used with any equality type but not with <code class="language-text">real</code>.</li></ol><h3>No Mutation: ML vs. Imperative Languages</h3><ol><li>In ML, we create aliases all the time without thinking about it because it is impossible to tell where there is aliasing.<ul><li>Example: <code class="language-text">tl</code> is constant time; does not copy rest of the list.</li><li>So do not worry and focus on the algorithm.</li></ul></li><li>In language with mutable data (e.g. Java), programmers are obsessed with aliasing and object identity.<ul><li>They have to be (!) so that subsequent assignments affect the right parts of the program.</li><li>Often crucial to make copies in just the right places.</li></ul></li><li>Reference (alias) vs. copy does not matter if code is immutable.</li></ol><h3>Pieces of a Language</h3><ol><li>Syntax</li><li>Semantics (evaluation rules)</li><li>Idioms (typical patterns for using language features to express the computation)</li><li>Libraries</li><li>Tools</li></ol><h3>Building Compound Types</h3><p>Three most important type building-blocks in any language:</p><ol><li>Each of: A <code class="language-text">t</code> value contains values of each of <code class="language-text">t1 t2 ... tn</code>. Such as tuples and records (idea of syntactic sugar and connection with tuples).</li><li>One of: A <code class="language-text">t</code> value contains values of ont of <code class="language-text">t1 t2 ... tn</code>. Such as option and a type that contains an int or string (will lead to pattern-matching).</li><li>Self reference: A <code class="language-text">t</code> value can refer to other <code class="language-text">t</code> values.</li></ol><h3>Records</h3><ol><li>Record values have fields (any name) holding values <code class="language-text">{f1 = v1, ... , fn = vn}</code>. Record types have fields holding types <code class="language-text">{f1 : t1, ..., fn : tn}</code>. The order of fields in a record value of type never matters. REPL alphabetizes fields just for consistency.</li><li>Building records: <code class="language-text">{f1 = e1, ..., fn = en}</code></li><li>Accessing pieces: <code class="language-text">#myfieldname e</code></li><li>Evaluation rules and type-checking as expected.</li><li>A common decision for a construct’s syntax is whether to refer to things by position (as in tuples) or by some (field) name (as with records).<ul><li>A common hybrid is like with Java method arguments (and ML functions are used so far):<ul><li>Caller uses position</li><li>Callee uses variables</li><li>Could do it differently</li></ul></li></ul></li><li>Tuples are just syntactic sugar for records with fields named 1, 2, …<ul><li>Syntactic: Can describe the semantics entirely by the corresponding record syntax.</li><li>They simplify understanding / implementing the langauge.</li></ul></li></ol><h3>Datatype Bindings</h3><ol><li>A way to make one-of types: <ul><li>A <code class="language-text">datatype</code> binding</li></ul><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">datatype mytype = 
+  TwoInts of int * int
+  | Str of string
+  | Pizza</code></pre></div></li></ol><ul><li>Adds a new type <code class="language-text">mytype</code> to the environment</li><li>Adds constructors to the environment: <code class="language-text">TwoInts</code>, <code class="language-text">Str</code> and <code class="language-text">Pizza</code><ul><li><code class="language-text">TwoInts : int * int -&gt; mytype</code></li><li><code class="language-text">Str : string -&gt; mytype</code></li><li><code class="language-text">Pizza : mytype</code></li></ul></li></ul><ol start="2"><li>A constructor is (among other things), a <strong>function</strong> that makes values of the new type (or is a value of the new type):</li></ol><ul><li>Any value of type <code class="language-text">mytype</code> is made from one of the constructors.</li><li>The value contains:<ul><li>A tag for which constructor (e.g. TwoInts)</li><li>The corresponding data (e.g. (7, 9)) </li></ul></li></ul><ol start="3"><li><p>In many other contexts, these datatypes are called tagged unions.</p></li><li><p>There are two aspects to accessing a datatype value:</p><ul><li>Check what variant it is (what constructor made it). <code class="language-text">null</code> and <code class="language-text">isSome</code> check variants.</li><li>Extract the data (if that variant has any). <code class="language-text">hd</code> <code class="language-text">tl</code> <code class="language-text">valOf</code> extract data (raise exception on wrong variant).</li></ul></li><li><p>Useful datatypes:</p><ul><li><p>Enumerations, including carrying other data.</p></li><li><p>Alternate ways of identifying real-world things/people.</p></li><li><p>Expression trees. This is an example using self-reference:</p><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">datatype exp = 
+  Constant of int
+  | Negate of exp
+  | Add of exp * exp
+  | Multiply of exp * exp
+
+(* functions over recursive datatypes are usually recursive *)
+
+fun eval e = 
+  case e of 
+    Constant i =&gt; i
+    | Negate e2 =&gt; ~ (eval e2)
+    | Add (e1, e2) =&gt; (eval e1) + (eval e2)
+    | Multiply (e1, e2) =&gt; (eval e1) * (eval e2)
+
+fun number_of_adds e = 
+  case e of
+    Constant i =&gt; 0
+    | Negate e2 =&gt; number_of_adds e2
+    | Add (e1, e2) =&gt; 1 + number_of_adds e1 + number_of_adds e2
+    | Multiply (e1, e2) =&gt; number_of_adds e1 + number_of_adds e2</code></pre></div></li><li><p>Lists and Options are datatypes.</p><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">datatype my_int_list = Empty | Cons of int * my_int_list
+
+fun inc_or_zero intoption = 
+  case intoption of
+    NONE =&gt; 0
+    | SOME i =&gt; i + 1
+
+fun append (xs, ys) =
+  case xs of
+    [] =&gt; ys
+    | x :: xs&#x27; =&gt; x :: append (xs&#x27;, ys)</code></pre></div></li></ul></li><li><p>Polymorphic Datatypes:</p><ul><li>Syntax: put one or more type variables before datatype name. Can use these type variables in constructor definitions. Binding then introduces a type constructor, not a type. (Must say <code class="language-text">int mylist</code>, <code class="language-text">&#x27;a mylist</code>, not <code class="language-text">mylist</code>).</li></ul><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">datatype &#x27;a mylist = Empty | Cons of &#x27;a * &#x27;a mylist
+
+datatype (&#x27;a, &#x27;b) tree = 
+  Node of &#x27;a * (&#x27;a, &#x27;b) tree * (&#x27;a, &#x27;b) tree
+  | Leaf of &#x27;b</code></pre></div></li></ol><ul><li>Use constructors and case expressions as usual. No change to evaluation rules. Type-checking will make sure types are used consistently. For example, cannot mix element types of list. Functions will be polymorphic or not based on how data is used.</li></ul><h3>Case Expressions</h3><ol><li>ML combines the two aspects of accessing a one-of value with a case expression and pattern-matching.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun f (x : mytype) = 
+  case x of
+    Pizza =&gt; 3
+    | Str s =&gt; 8
+    | TwoInts (i1, i2) =&gt; i1 + i2</code></pre></div><ul><li>A multi-branch conditional to pick branch based on variant.</li><li>Extracts data and binds to variables local to that branch.</li><li>Type-checking: all branches must have same type.</li><li>Evaluation: evaluate between case … of and the right branch.</li><li>Patterns are not expressions: We do not evaluate them. We see if the result of <code class="language-text">e0</code> matches them.</li></ul><h3>Type Synonyms</h3><ol><li>Creating new types:</li></ol><ul><li>A datatype binding introduces a new type name.<ul><li>Distinct from all existing types.</li><li>Only way to create values of the new type is the constructors.</li></ul></li><li>A type synonym is a new kind of binding <code class="language-text">type aname = t</code>.<ul><li>Just creates another name for a type.</li><li>The type and the name are interchangeable in every way.</li><li>Do not worry about that REPL prints: picks what it wants just like it picks the order of record field names.</li></ul></li></ul><ol start="2"><li>A convenience for talking about types. Related to modularity.</li></ol><h3>Each of Pattern Matching</h3><ol><li>Pattern matching also works for records and tuples.</li><li>Val-binding patterns: variables are just one kind of pattern. </li><li>A function argument can also be a pattern. What we call multi-argument functions are just functions taking one tuple argument, implemented with a tuple pattern in the function binding. Zero arguments is the unit pattern () matching the unit value ().</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun sum_triple triple = 
+  case triple of
+    (x, y, z) =&gt; x + y + z
+
+fun sum_triple1 triple = 
+  let val (x, y, z) = triple
+  in
+    x + y + z
+  end
+
+fun sum_triple2 (x, y, z) = x + y + z</code></pre></div><h3>Polymorphic and Equality types</h3><ol><li>The <strong>more general</strong> rule: A type t1 is more general than the type t2 if you can take t1, replace its type variables consistently, and get t2.</li></ol><ul><li>Example: replace each <code class="language-text">&#x27;a</code> with <code class="language-text">int * int</code></li><li>Example: replace each <code class="language-text">&#x27;b</code> with <code class="language-text">&#x27;a</code> and each <code class="language-text">&#x27;a</code> with <code class="language-text">&#x27;a</code></li></ul><ol start="2"><li>Can combine the <strong>more general</strong> rule with rules for equivalence:</li></ol><ul><li>Use of type synonyms does not matter</li><li>Order of field names does not matter</li></ul><ol start="3"><li>Type variables with a second quote such as <code class="language-text">&#x27;&#x27;a list * &#x27;&#x27;a -&gt; bool</code> are <strong>equality types</strong> that arise from using the = operator. The = operator works on lots of types: int, string, tuples containing all equality types… But not all types: function types, real…</li><li>The rules for more general are exactly the same except you have to replace an equality-type variable with a type taht can be used with =.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">(* &#x27;&#x27;a * &#x27;&#x27;a -&gt; string *)
+fun same_thing (x, y) =
+  if x = y then &quot;yes&quot; else &quot;no&quot;</code></pre></div><h3>Nested Patterns</h3><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun zip list_triple =
+  case list_triple of
+    ([], [], []) =&gt; []
+    | (hd1 :: tl1, hd2 :: tl2, hd3 :: tl3) =&gt; 
+      (hd1, hd2, hd3) :: zip (tl1, tl2, tl3)
+    | _ =&gt; raise ListLengthMismatch
+
+fun unzip lst = 
+  case lst of
+    [] =&gt; ([], [], [])
+    | (a, b, c) :: tl =&gt; 
+      let val (l1, l2, l3) = unzip tl
+      in (a :: l1, b :: l2, c :: l3) end
+
+fun multsign (x1, x2) = (* int * int -&gt; sgn *)
+  let fun sign x = if x = 0 then Z else if x &gt; 0 then P else N
+  in
+    case (sign x1, sign x2) of
+      (Z, _) =&gt; Z
+    | (_, Z) =&gt; Z
+    | (P, P) =&gt; P
+    | (N, N) =&gt; P
+    | (N, P) =&gt; N
+    | (P, N) =&gt; N
+  end</code></pre></div><ol><li>We can nest patterns as deep as we want. The full meaning of pattern matching is to compare a pattern against a value for the same shape and bind variables to the right parts.</li><li>A common idiom is matching against a tuple of datatypes to compare them.</li><li>Wildcards are good style: use them instead of variables when you do not need the data.</li><li>The semantics for pattern-matching takes a pattern p and a value v and decides does it match and if so what variable bindings are introduced. Since patterns can nest, the definition is elegantly recursive, with a separate rule for each kind of pattern.</li><li>Function patterns: syntactic sugar of case expression.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun f p1 = e1
+  | f p2 = e2
+  | f pn = en
+
+fun append ([], ys) = ys
+  | append (x :: xs&#x27;, ys) = x :: append (xs&#x27;, ys)</code></pre></div><h3>Exceptions</h3><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun maxlist (xs, ex) = (* int list * exn -&gt; int *)
+  case xs of
+    [] =&gt; raise ex
+  | x :: [] =&gt; x
+  | x :: xs&#x27; =&gt; Int.max(x, maxlist (xs&#x27;, ex))
+
+exception MyException of int * int
+exception MySimpleException
+
+val x = maxlist ([3, 4, 5], MySimpleException)
+        handle MySimpleException =&gt; 0
+
+val w = maxlist ([], MyException (2, 3))
+        handle MyException (x, y) =&gt; x + y</code></pre></div><ol><li>Exceptions are a lot like datatype constructors.</li><li>Declaring an exception makes adds a constructor for type <code class="language-text">exn</code>.</li><li>Can pass values of <code class="language-text">exn</code> anywhere (e.g. function arguments).</li><li>Handle can have multiple branches with patterns for type <code class="language-text">exn</code>.</li></ol><h3>Tail Recursion</h3><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun fact n = 
+  let fun aux (n, acc) =
+    if n = 0
+    then acc
+    else aux (n - 1, acc * n)
+  in aux (n, 1) end
+
+fun rev&#x27; xs = 
+  case xs of
+    [] =&gt; []
+  (* append must traverse the first list *)
+  | x :: xs&#x27; =&gt; (rev&#x27; xs&#x27;) @ [x]
+
+fun rev xs = 
+  let fun aux (xs, acc) =
+    case xs of
+      [] =&gt; acc
+    | x :: xs&#x27; =&gt; aux (xs&#x27;, x :: acc)
+  in aux (xs, []) end</code></pre></div><ol><li>While a program runs, there is a call stack of function calls that have started but not yet returned.</li></ol><ul><li>Calling a function f pushes an instance of f on the stack.</li><li>When a call to f finished, it is popped from the stack.</li><li>These stack-frames store information like the value of local variables and what is left to do in function. Due to recursion, multiple stack-frames may be calls to the same function.</li></ul><ol start="2"><li>An optimization: It is unnecessary to keep around a stack-frame just so it can get a callee’s result and return it without any further evaluaion. ML recognizes these tail calls in the compiler and treats them differently:</li></ol><ul><li>Pop the caller before the call, allowing callee to reuse the same stack space (tail-calls: nothing left for caller to do, so the pop caller).</li><li>Along with other optimizations, as efficient as a loop.
+<span class="gatsby-resp-image-wrapper" style="position:relative;display:block;margin-left:auto;margin-right:auto;max-width:600px">
+      <a class="gatsby-resp-image-link" href="/static/e39f0b1763327ebb5c3e40ae3ae17c47/ff59c/tail.png" style="display:block" target="_blank" rel="noopener">
+    <span class="gatsby-resp-image-background-image" style="padding-bottom:48.7719298245614%;position:relative;bottom:0;left:0;background-image:url(&#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAAsSAAALEgHS3X78AAAB3klEQVQoz31Ra3PSQBTNr+8HRagBh0c/AR2BIqLjjCDWR+sMM/hZKvWLdBryIARKbPOA7B5PEoqOOt7Jydm9e8/JvRtFSgk+jAj2jw+wb3qwrI+4cU9x5/Ug8Q6ReIttNCAPWHsKIZmX1+Ahn1gfG6Ss/DLcYBPVsLrLQFvkMFtloM9VXF1l4TgFLJ08PD9LWRECZPllZyh2hmko9xspN3yfEEXiCJEs46uRw/jbAeZWjl1VKK6wyyOu86y/SA2l2He37/DeUKKFcFtAGJWYqWC6fAx9eYjp9wNY8wxsOwtNe4j1+gHPL5LJ/muI2DDieG4elvkIy9UhPK/A8jI7K+1QZocq68f7kf8wFMmXhAjJTbiBiuk8B3et4vY2j3BTTAyFjFFKRo8NhRgjbk7KaG+WGOK3WPl1uF6eRk/4IzJYuzlmSywsk8vJNaRQiQn+FYqhL2CaDrGAPpvANCawjMuEZ9oYhj5h/jJl7k2eWWZcpzFvwzCoNxzmlrDnDpTjag/dzie8fjVCjetm4xztkyFedkc4rg9QrQ7wovsZnWdD1Gt9NJ6eoft8hHbrHK3GG9b00Wq+R6d9hkF/CCUMtwiCDS8/gO8HXIcJe54Pnwh3e/+vfZBoQmqDWOen+p+b+d1IrewxGAAAAABJRU5ErkJggg==&#x27;);background-size:cover;display:block"></span>
+  <picture>
+        <source srcSet="/static/e39f0b1763327ebb5c3e40ae3ae17c47/35ebc/tail.webp 285w,/static/e39f0b1763327ebb5c3e40ae3ae17c47/8865d/tail.webp 570w,/static/e39f0b1763327ebb5c3e40ae3ae17c47/f8b1b/tail.webp 600w" sizes="(max-width: 600px) 100vw, 600px" type="image/webp"/>
+        <source srcSet="/static/e39f0b1763327ebb5c3e40ae3ae17c47/5459c/tail.png 285w,/static/e39f0b1763327ebb5c3e40ae3ae17c47/2cee3/tail.png 570w,/static/e39f0b1763327ebb5c3e40ae3ae17c47/ff59c/tail.png 600w" sizes="(max-width: 600px) 100vw, 600px" type="image/png"/>
+        <img class="gatsby-resp-image-image" src="/static/e39f0b1763327ebb5c3e40ae3ae17c47/ff59c/tail.png" alt="tail" title="tail" loading="lazy" style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0"/>
+      </picture>
+  </a>
+    </span></li></ul><ol start="3"><li>Accumulators for tail recursion: </li></ol><ul><li>Tail-recursive: recursive calls are tail-calls.</li><li>A methodology that can often guide this transformation: Create a helper function that takes an accumulator. Old base case becomes initial accumulator. New base case becomes final accumulator.</li></ul><ol start="4"><li>There are certainly cases where recursive functions cannot be evaluated in a constant amount of space. Most obvious examples are functions that process trees. In these cases, the natural recursive approach is the way to go.</li><li>A tail call is a function call in tail position. If an expression is not in tail position, then no subexpressions are. The nothing left for caller to do intuition usually suffices.</li></ol></article><div class="utterances" style="top:50px"></div></div></div></main><footer class="css-1wvahdb e1v9gu3l0"><style data-emotion-css="voneje">.css-voneje{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><style data-emotion-css="1u3kyku">.css-1u3kyku{position:relative;margin-left:auto;margin-right:auto;width:auto;max-width:40em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><div class="e1v9gu3l1 css-1u3kyku eqdtqc0"><style data-emotion-css="19sj128">.css-19sj128{color:rgba(0,0,0,0.54);font-size:0.8rem;}.css-19sj128:hover,.css-19sj128:focus{-webkit-text-decoration:none;text-decoration:none;}</style><a class="css-19sj128 e1v9gu3l2" href="/about">Copyright © <!-- -->2020<!-- --> <!-- -->raptazure<!-- -->. Built with Gatsby.</a></div></footer></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-128956609-1"></script><script>
     window.GATSBY_GTAG_PLUGIN_GA_TRACKING_ID = (
       'UA-128956609-1'
     );
