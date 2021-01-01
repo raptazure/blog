@@ -188,7 +188,66 @@ fun rev xs =
         <img class="gatsby-resp-image-image" src="/static/e39f0b1763327ebb5c3e40ae3ae17c47/ff59c/tail.png" alt="tail" title="tail" loading="lazy" style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0"/>
       </picture>
   </a>
-    </span></li></ul><ol start="3"><li>Accumulators for tail recursion: </li></ol><ul><li>Tail-recursive: recursive calls are tail-calls.</li><li>A methodology that can often guide this transformation: Create a helper function that takes an accumulator. Old base case becomes initial accumulator. New base case becomes final accumulator.</li></ul><ol start="4"><li>There are certainly cases where recursive functions cannot be evaluated in a constant amount of space. Most obvious examples are functions that process trees. In these cases, the natural recursive approach is the way to go.</li><li>A tail call is a function call in tail position. If an expression is not in tail position, then no subexpressions are. The nothing left for caller to do intuition usually suffices.</li></ol></article><div class="utterances" style="top:50px"></div></div></div></main><footer class="css-1wvahdb e1v9gu3l0"><style data-emotion-css="voneje">.css-voneje{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><style data-emotion-css="1u3kyku">.css-1u3kyku{position:relative;margin-left:auto;margin-right:auto;width:auto;max-width:40em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><div class="e1v9gu3l1 css-1u3kyku eqdtqc0"><style data-emotion-css="19sj128">.css-19sj128{color:rgba(0,0,0,0.54);font-size:0.8rem;}.css-19sj128:hover,.css-19sj128:focus{-webkit-text-decoration:none;text-decoration:none;}</style><a class="css-19sj128 e1v9gu3l2" href="/about">Copyright © <!-- -->2020<!-- --> <!-- -->raptazure<!-- -->. Built with Gatsby.</a></div></footer></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-128956609-1"></script><script>
+    </span></li></ul><ol start="3"><li>Accumulators for tail recursion: </li></ol><ul><li>Tail-recursive: recursive calls are tail-calls.</li><li>A methodology that can often guide this transformation: Create a helper function that takes an accumulator. Old base case becomes initial accumulator. New base case becomes final accumulator.</li></ul><ol start="4"><li>There are certainly cases where recursive functions cannot be evaluated in a constant amount of space. Most obvious examples are functions that process trees. In these cases, the natural recursive approach is the way to go.</li><li>A tail call is a function call in tail position. If an expression is not in tail position, then no subexpressions are. The nothing left for caller to do intuition usually suffices.</li></ol><h3>First-Class Functions</h3><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun n_times (f, n, x) = 
+  if n = 0 
+  then x
+  else f (n_times (f, n - 1, x))
+
+fun increment x = x + 1
+fun double x = x + x
+
+val x1 = n_times (double, 4, 7)
+val x2 = n_times (increment, 4, 7)
+val x3 = n_times (tl, 2, [4, 8, 12, 16])
+
+fun triple_n_times (n, x) = 
+  n_times ((fn x =&gt; 3 * x), n, x)</code></pre></div><ol><li>Functions are values too. Higher order functions are the most useful ones when you want to abstract over what to compute with.</li><li>Function closure: Functions can use bindings from outside the function definition (in scope where function is defined).</li><li>Anonymous functions: most commonly used as argument to a higher-order function. Do not need a name just to pass a function. Can not use an anonymous function for a recursive function. If not for recursion, <code class="language-text">fun</code> bindings would be syntatic sugar for <code class="language-text">val</code> bindings and anonymous functions.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun triple x = 3 * x
+val triple = fn y =&gt; 3 * y</code></pre></div><ol start="4"><li>Map and filter: predefined in <code class="language-text">List</code>.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">(* (&#x27;a -&gt; &#x27;b) * &#x27;a list -&gt; &#x27;b list *)
+fun map (f, xs) =
+  case xs of
+    [] =&gt; []
+    | x :: xs&#x27; =&gt; (f x) :: map (f, xs&#x27;)
+
+val x1 = map ((fn x =&gt; x + 1), [4, 8, 12])
+val x2 = map (hd, [[1, 2], [3, 4], [5, 6, 7]])
+
+(* (&#x27;a -&gt; bool) * &#x27;a list -&gt; &#x27;a list *)
+fun filter (f, xs) = 
+  case xs of
+    [] =&gt; []
+    | x :: xs&#x27; =&gt; if f x
+                  then x :: (filter (f, xs&#x27;))
+                  else filter (f, xs&#x27;)
+
+fun is_even v = 
+  (v mod 2 = 0)
+
+fun all_even xs = filter (is_even, xs)
+
+fun all_even_snd xs = filter ((fn (_, v) =&gt; is_even v), xs)</code></pre></div><ol start="5"><li>Fold: (synonyms / close relatives reduce, inject, etc.) is another very famous iterator over recursive structures. Accumulates an answer by repeatedly applying f to answer so far. These iterator-like functions are not built into SML. It is just a programming pattern. This pattern separates recursive traversal from data processing. Can reuse same traversal for different data processing. Can reuse same data processing for different data structures.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun fold (f, acc, xs) = 
+  case xs of 
+    [] =&gt; acc
+    | x :: xs =&gt; fold (f, f (acc, x), xs)</code></pre></div><h3>Lexical Scope</h3><ol><li>Closures:</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">val x = 1 (* x maps to 1 *)
+fun f y = x + y (* f maps to a function that adds 1 to its argument *)
+val x = 2 (* x maps to 2 *)
+val y = 3 (* y maps to 3 *)
+val z = f (x + y) (* call the function defined on line 4 with 5 *) 
+(* z maps to 6 *)</code></pre></div><ul><li>How can functions be evaluated in old enviroments that are not around anymore? The language implementation keeps them around as necessary. Can define the semantics of functions as follows:<ul><li>A function value has two parts: the code and the environment that was current when the function was defined.</li><li>This is a pair but unlike ML pairs. You cannot access the pieces. All you can do is call this pair. This pair is called a function closure.</li><li>A call evaluates the code part in the environment part (extended with the function argument).</li></ul></li><li>Line 2 creates a closure and binds f to it.<ul><li>Code: take y and body x + y</li><li>Environment: x maps to 1. (Plus whatever else is in scope, including f for recursion)</li></ul></li><li>Line 5 calls the closure defined in line 2 with 5. So body evaluated in environment x maps to 1 extended with y maps to 5.</li></ul><ol start="2"><li>Lexical scope and higher-order functions: the rule stays the same. A function body is evaluated in the environment where the function was defined. (Extended with the function argument). Nothing changes to this rule when we take and return functions. (But the environment may involve nested let-expressions, not just the top-level sequence of bindings). Makes first-class functions much more powerful.</li><li>Why lexical scope:</li></ol><ul><li>Lexical scope: use environment where function is defined.</li><li>Dynamic scope: use environment where function is called.</li><li>Function meaning does not depend on variable names used:<ul><li>Can change body of f to use q everywhere instead of x.</li><li>Can remove unused variables.</li></ul></li><li>Functions can be type-checked and reasoned about where defined.</li><li>Closures can easily store the data they need.</li><li>Lexical scope for variables is definitely the right default (very common across languages). Dynamic scope is occassionally convenient in some situations. So some languages (e.g. Racket) have special ways to do it. Exception handling is more like dynamic scope. <code class="language-text">raise e</code> transfers control to the current innermost handler. Does not have to be syntactically inside a handle expression (and usually is not).</li></ul><h3>Closures and Recomputation</h3><ol><li>When things evaluate: a function body is not evaluated until the function is called. A function body is evaluated every time the function is called. A variable binding evaluates its expression when the bining is evaluated, not every time the variable is used. With closures, this means we can avoid repeating computations that do not depend on function arguments.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun filter (f, xs) =
+  case xs of
+    [] =&gt; []
+    | x :: xs&#x27; =&gt; if f x
+                  then x :: filter (f, xs&#x27;)
+                  else filter (f, xs&#x27;)
+
+fun allShorterThan1 (xs, s) = 
+  filter (fn x =&gt; String.size x &lt; String.size s, xs)
+
+fun allShorterThan2 (xs, s) =
+  let 
+    val i = String.size s
+  in 
+    filter (fn x =&gt; String.size x &lt; i, xs) 
+  end</code></pre></div></article><div class="utterances" style="top:50px"></div></div></div></main><footer class="css-1wvahdb e1v9gu3l0"><style data-emotion-css="voneje">.css-voneje{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><style data-emotion-css="1u3kyku">.css-1u3kyku{position:relative;margin-left:auto;margin-right:auto;width:auto;max-width:40em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><div class="e1v9gu3l1 css-1u3kyku eqdtqc0"><style data-emotion-css="19sj128">.css-19sj128{color:rgba(0,0,0,0.54);font-size:0.8rem;}.css-19sj128:hover,.css-19sj128:focus{-webkit-text-decoration:none;text-decoration:none;}</style><a class="css-19sj128 e1v9gu3l2" href="/about">Copyright © <!-- -->2021<!-- --> <!-- -->raptazure<!-- -->. Built with Gatsby.</a></div></footer></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-128956609-1"></script><script>
     window.GATSBY_GTAG_PLUGIN_GA_TRACKING_ID = (
       'UA-128956609-1'
     );
