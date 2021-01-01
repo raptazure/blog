@@ -1,5 +1,5 @@
 ---
-title: Cubical
+title: Cubical Type
 date: 2020-12-13
 tags:
   - type theory

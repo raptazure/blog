@@ -482,3 +482,115 @@ fun rev xs =
 - A methodology that can often guide this transformation: Create a helper function that takes an accumulator. Old base case becomes initial accumulator. New base case becomes final accumulator.
 4. There are certainly cases where recursive functions cannot be evaluated in a constant amount of space. Most obvious examples are functions that process trees. In these cases, the natural recursive approach is the way to go.
 5. A tail call is a function call in tail position. If an expression is not in tail position, then no subexpressions are. The nothing left for caller to do intuition usually suffices.
+
+### First-Class Functions
+
+```sml
+fun n_times (f, n, x) = 
+  if n = 0 
+  then x
+  else f (n_times (f, n - 1, x))
+
+fun increment x = x + 1
+fun double x = x + x
+
+val x1 = n_times (double, 4, 7)
+val x2 = n_times (increment, 4, 7)
+val x3 = n_times (tl, 2, [4, 8, 12, 16])
+
+fun triple_n_times (n, x) = 
+  n_times ((fn x => 3 * x), n, x)
+```
+
+1. Functions are values too. Higher order functions are the most useful ones when you want to abstract over what to compute with.
+2. Function closure: Functions can use bindings from outside the function definition (in scope where function is defined).
+3. Anonymous functions: most commonly used as argument to a higher-order function. Do not need a name just to pass a function. Can not use an anonymous function for a recursive function. If not for recursion, `fun` bindings would be syntatic sugar for `val` bindings and anonymous functions.
+```sml
+fun triple x = 3 * x
+val triple = fn y => 3 * y
+```
+4. Map and filter: predefined in `List`.
+```sml
+(* ('a -> 'b) * 'a list -> 'b list *)
+fun map (f, xs) =
+  case xs of
+    [] => []
+    | x :: xs' => (f x) :: map (f, xs')
+
+val x1 = map ((fn x => x + 1), [4, 8, 12])
+val x2 = map (hd, [[1, 2], [3, 4], [5, 6, 7]])
+
+(* ('a -> bool) * 'a list -> 'a list *)
+fun filter (f, xs) = 
+  case xs of
+    [] => []
+    | x :: xs' => if f x
+                  then x :: (filter (f, xs'))
+                  else filter (f, xs')
+
+fun is_even v = 
+  (v mod 2 = 0)
+
+fun all_even xs = filter (is_even, xs)
+
+fun all_even_snd xs = filter ((fn (_, v) => is_even v), xs)
+```
+5. Fold: (synonyms / close relatives reduce, inject, etc.) is another very famous iterator over recursive structures. Accumulates an answer by repeatedly applying f to answer so far. These iterator-like functions are not built into SML. It is just a programming pattern. This pattern separates recursive traversal from data processing. Can reuse same traversal for different data processing. Can reuse same data processing for different data structures.
+```sml
+fun fold (f, acc, xs) = 
+  case xs of 
+    [] => acc
+    | x :: xs => fold (f, f (acc, x), xs)
+```
+
+### Lexical Scope
+
+1. Closures:
+```sml
+val x = 1 (* x maps to 1 *)
+fun f y = x + y (* f maps to a function that adds 1 to its argument *)
+val x = 2 (* x maps to 2 *)
+val y = 3 (* y maps to 3 *)
+val z = f (x + y) (* call the function defined on line 4 with 5 *) 
+(* z maps to 6 *)
+```
+- How can functions be evaluated in old enviroments that are not around anymore? The language implementation keeps them around as necessary. Can define the semantics of functions as follows:
+  - A function value has two parts: the code and the environment that was current when the function was defined.
+  - This is a pair but unlike ML pairs. You cannot access the pieces. All you can do is call this pair. This pair is called a function closure.
+  - A call evaluates the code part in the environment part (extended with the function argument).
+- Line 2 creates a closure and binds f to it.
+  - Code: take y and body x + y
+  - Environment: x maps to 1. (Plus whatever else is in scope, including f for recursion)
+- Line 5 calls the closure defined in line 2 with 5. So body evaluated in environment x maps to 1 extended with y maps to 5.
+2. Lexical scope and higher-order functions: the rule stays the same. A function body is evaluated in the environment where the function was defined. (Extended with the function argument). Nothing changes to this rule when we take and return functions. (But the environment may involve nested let-expressions, not just the top-level sequence of bindings). Makes first-class functions much more powerful.
+3. Why lexical scope:
+- Lexical scope: use environment where function is defined.
+- Dynamic scope: use environment where function is called.
+- Function meaning does not depend on variable names used:
+  - Can change body of f to use q everywhere instead of x.
+  - Can remove unused variables.
+- Functions can be type-checked and reasoned about where defined.
+- Closures can easily store the data they need.
+- Lexical scope for variables is definitely the right default (very common across languages). Dynamic scope is occassionally convenient in some situations. So some languages (e.g. Racket) have special ways to do it. Exception handling is more like dynamic scope. `raise e` transfers control to the current innermost handler. Does not have to be syntactically inside a handle expression (and usually is not).
+
+### Closures and Recomputation
+
+1. When things evaluate: a function body is not evaluated until the function is called. A function body is evaluated every time the function is called. A variable binding evaluates its expression when the bining is evaluated, not every time the variable is used. With closures, this means we can avoid repeating computations that do not depend on function arguments.
+```sml
+fun filter (f, xs) =
+  case xs of
+    [] => []
+    | x :: xs' => if f x
+                  then x :: filter (f, xs')
+                  else filter (f, xs')
+
+fun allShorterThan1 (xs, s) = 
+  filter (fn x => String.size x < String.size s, xs)
+
+fun allShorterThan2 (xs, s) =
+  let 
+    val i = String.size s
+  in 
+    filter (fn x => String.size x < i, xs) 
+  end
+```
