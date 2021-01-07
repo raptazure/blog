@@ -8,8 +8,8 @@
 <span class="token keyword">impl</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token operator">&gt;</span> <span class="token class-name">Vec</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
     <span class="token comment">// Constructs a new, empty `Vec&lt;T&gt;`.</span>
     <span class="token comment">// Note this is a static method - no self.</span>
-    <span class="token comment">// This constructor doesn&#x27;t take any arguments, but some might in order to</span>
-    <span class="token comment">// properly initialise an object</span>
+    <span class="token comment">// This constructor doesn&#x27;t take any arguments, but some </span>
+    <span class="token comment">// might in order to properly initialise an object</span>
     <span class="token keyword">pub</span> <span class="token keyword">fn</span> <span class="token function-definition function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">Vec</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
         <span class="token comment">// Create a new Vec with fields properly initialised.</span>
         <span class="token class-name">Vec</span> <span class="token punctuation">{</span>
@@ -58,6 +58,24 @@
   <span class="token keyword">fn</span> <span class="token function-definition function">deref</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token operator">&amp;</span><span class="token punctuation">[</span><span class="token class-name">T</span><span class="token punctuation">]</span> <span class="token punctuation">{</span>
     <span class="token comment">// ..</span>
   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre></div><h2>6. Finalisation in destructors</h2><p>In Rust, destructors are run when an object goes out of scope. This happens whether we reach the end of block, there is an early return, or the program panics. When panicking, Rust unwinds the stack running destructors for each object in each stack frame. So, destructors get called even if the panic happens in a function being called.</p><div class="gatsby-highlight" data-language="rust"><pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token class-name">Result</span><span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// These don&#x27;t need to be defined inside the function.</span>
+    <span class="token keyword">struct</span> <span class="token type-definition class-name">Foo</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Implement a destructor for Foo.</span>
+    <span class="token keyword">impl</span> <span class="token class-name">Drop</span> <span class="token keyword">for</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fn</span> <span class="token function-definition function">drop</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token macro property">println!</span><span class="token punctuation">(</span><span class="token string">&quot;exit&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// The dtor of _exit will run however </span>
+    <span class="token comment">// the function `bar` is exited.</span>
+    <span class="token keyword">let</span> _exit <span class="token operator">=</span> <span class="token class-name">Foo</span><span class="token punctuation">;</span>
+    <span class="token comment">// Implicit return with `?` operator.</span>
+    <span class="token function">baz</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">;</span>
+    <span class="token comment">// Normal return.</span>
+    <span class="token class-name">Ok</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre></div></article><div class="utterances" style="top:50px"></div></div></div></main><footer class="css-1wvahdb e1v9gu3l0"><style data-emotion-css="voneje">.css-voneje{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><style data-emotion-css="1u3kyku">.css-1u3kyku{position:relative;margin-left:auto;margin-right:auto;width:auto;max-width:40em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><div class="e1v9gu3l1 css-1u3kyku eqdtqc0"><style data-emotion-css="19sj128">.css-19sj128{color:rgba(0,0,0,0.54);font-size:0.8rem;}.css-19sj128:hover,.css-19sj128:focus{-webkit-text-decoration:none;text-decoration:none;}</style><a class="css-19sj128 e1v9gu3l2" href="/about">Copyright © <!-- -->2021<!-- --> <!-- -->raptazure<!-- -->. Built with Gatsby.</a></div></footer></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-128956609-1"></script><script>
     window.GATSBY_GTAG_PLUGIN_GA_TRACKING_ID = (
       'UA-128956609-1'
