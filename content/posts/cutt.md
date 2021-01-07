@@ -23,3 +23,4 @@ A HIT is a type equipped with custom equality. As an example, you can write a ty
 
 It gives the universe the strongest possible equality in advance, because we do not define another universe.
 
+> To be continued...
