@@ -25,6 +25,28 @@ fn say_hello(name : &str) -> String {
 
 Use a static `new` method to create an object.
 
+```rust
+pub struct Vec<T> {
+    buf: RawVec<T>,
+    len: usize,
+}
+
+impl<T> Vec<T> {
+    // Constructs a new, empty `Vec<T>`.
+    // Note this is a static method - no self.
+    // This constructor doesn't take any arguments, but some 
+    // might in order to properly initialise an object
+    pub fn new() -> Vec<T> {
+        // Create a new Vec with fields properly initialised.
+        Vec {
+            // Note that here we are calling RawVec's constructor.
+            buf: RawVec::new(),
+            len: 0,
+        }
+    }
+}
+```
+
 ## 4. The Default Trait
 
 Many types in Rust have a constructor. However, this is specific to the type; Rust cannot abstract over everything that has a new() method. To allow this, the Default trait was conceived, which can be used with containers and other generic types.
@@ -78,5 +100,31 @@ impl<T> Deref for Vec<T> {
   fn deref(&self) -> &[T] {
     // ..
   }
+}
+```
+
+## 6. Finalisation in destructors
+
+In Rust, destructors are run when an object goes out of scope. This happens whether we reach the end of block, there is an early return, or the program panics. When panicking, Rust unwinds the stack running destructors for each object in each stack frame. So, destructors get called even if the panic happens in a function being called.
+
+```rust
+fn bar() -> Result<(), ()> {
+    // These don't need to be defined inside the function.
+    struct Foo;
+
+    // Implement a destructor for Foo.
+    impl Drop for Foo {
+        fn drop(&mut self) {
+            println!("exit");
+        }
+    }
+
+    // The dtor of _exit will run however 
+    // the function `bar` is exited.
+    let _exit = Foo;
+    // Implicit return with `?` operator.
+    baz()?;
+    // Normal return.
+    Ok(())
 }
 ```

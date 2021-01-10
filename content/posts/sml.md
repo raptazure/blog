@@ -594,3 +594,292 @@ fun allShorterThan2 (xs, s) =
     filter (fn x => String.size x < i, xs) 
   end
 ```
+2. Closure Idioms:
+- Pass functions with private data to iterators
+- Combining functions (e.g. composition)
+```sml
+fun compose (f, g) = fn x => f (g x)
+fun sqrt_of_abs i = Math.sqrt (Real.fromInt (abs i))
+fun sqrt_of_abs' i = (Math.sqrt o Real.fromInt o abs) i
+val sqrt_of_abs'' = Math.sqrt o Real.fromInt o abs
+
+infix !>
+fun x !> f = f x
+fun sqrt_of_abs''' i = i !> abs !> Real.fromInt !> Math.sqrt
+
+fun backup1 (f, g) = fn x => case f x of 
+                                NONE => g x
+                              | SOME y => y
+
+fun backup2 (f, g) = fn x => f x handle _ => g x
+```
+- Currying (multi-arg functions and partial application). Efficiency: SML/NJ compiles tuples more efficiently. But many other functional language implementations do better with currying (OCaml, F#, Haskell).
+```sml
+val sorted3 = fn x => fn y => fn z => z >= y andalso y >= x
+
+val t1 = ((sorted3 7) 9) 11
+val t2 = sorted3 7 9 11
+
+fun sorted3_nicer x y z = z >= y andalso y >= x
+
+fun fold f acc xs = 
+  case xs of
+    [] => acc
+    | x :: xs' => fold f (f(acc, x)) xs'
+
+fun sum xs = fold (fn (x, y) => x + y) 0 xs 
+
+fun exists predicate xs =
+  case xs of
+    [] => false
+  | x :: xs' => predicate x orelse exists predicate xs'
+
+val hasZero = exists (fn x => x = 0)
+
+fun curry f = fn x => fn y => f (x, y)
+fun curry1 f x y = f (x, y)
+
+fun uncurry f (x, y) = f x y
+```
+- Callbacks (e.g. in reactive programming): Library takes functions to apply later, when an event occurs. 
+- Implementing an ADT with a record of functions.
+3. Closure idioms without closures:
+- Higher-order programming is great.
+```sml
+datatype 'a mylist = Cons of 'a * ('a mylist) | Empty
+
+fun map f xs =
+  case xs of
+    Empty => Empty
+  | Cons (x, xs) => Cons (f x, map f xs)
+
+fun filter f xs = 
+  case xs of
+    Empty => Empty
+  | Cons (x, xs) => if f x
+                    then Cons (x, filter f xs)
+                    else filter f xs
+
+fun length xs = 
+  case xs of
+    Empty => 0
+  | Cons (x, xs) => 1 + length xs
+
+val doubleAll = map (fn x => x * 2)
+
+fun countNs (xs, n : int) = length (filter (fn x => x = n) xs)
+```
+- In OOP with one-method interfaces. An interface is a named [polymorphic] type. An object with one method can serve as a closure.
+```java
+interface Func<B, A> {
+  B m(A x);
+}
+
+interface Pred<A> {
+  boolean m(A x);
+}
+
+class List<T> {
+  T head;
+  List<T> tail;
+
+  List(T x, List<T> xs) {
+    head = x;
+    tail = xs;
+  }
+
+  static <A, B> List<B> map(Func<B, A> f, List<A> xs) {
+    if (xs == null)
+      return null;
+    return new List<B>(f.m(xs.head), map(f, xs.tail));
+  }
+
+  static <A> List<A> filter(Pred<A> f, List<A> xs) {
+    if (xs == null)
+      return null;
+    if (f.m(xs.head))
+      return new List<A>(xs.head, filter(f, xs.tail));
+    return filter(f, xs.tail);
+  }
+
+  static <A> int length(List<A> xs) {
+    int ans = 0;
+    while (xs != null) {
+      ++ans;
+      xs = xs.tail;
+    }
+    return ans;
+  }
+}
+
+public class Clients {
+  static List<Integer> doubleAll(List<Integer> xs) {
+    return List.map((new Func<Integer, Integer>() {
+      public Integer m(Integer x) {
+        return x * 2;
+      }
+    }), xs);
+  }
+
+  static int countNs(List<Integer> xs, final int n) {
+    return List.length(List.filter((new Pred<Integer>() {
+      public boolean m(Integer x) {
+        return x == n;
+      }
+    }), xs));
+  }
+}
+```
+- In procedural with explicit environment arguments. In C, a function pointer is only a code pointer. A common technique: always define function pointers and higher-order functions to take an extra explicit environment argument. But without generics, no good choice for type of list elements or the environment. Use `void*` and various type casts...
+```c
+typedef struct List list_t;
+
+struct List
+{
+  void *head;
+  list_t *tail;
+};
+
+list_t *makelist(void *x, list_t *xs)
+{
+  list_t *ans = (list_t *)malloc(sizeof(list_t));
+  ans->head = x;
+  ans->tail = xs;
+  return ans;
+}
+
+list_t *map(void *(*f)(void *, void *), void *env, list_t *xs)
+{
+  if (xs == NULL)
+    return NULL;
+  return makelist(f(env, xs->head), map(f, env, xs->tail));
+}
+
+list_t *filter(bool (*f)(void *, void *), void *env, list_t *xs)
+{
+  if (xs == NULL)
+    return NULL;
+  if (f(env, xs->head))
+    return makelist(xs->head, filter(f, env, xs->tail));
+  return filter(f, env, xs->tail);
+}
+
+int length(list_t *xs)
+{
+  int ans = 0;
+  while (xs != NULL)
+  {
+    ++ans;
+    xs = xs->tail;
+  }
+  return ans;
+}
+
+void *doubleInt(void *ignore, void *i)
+{
+  return (void *)(((intptr_t)i) * 2);
+}
+
+// assumes list holds intptr_t fileds
+list_t *doubleAll(list_t *xs)
+{
+  return map(doubleInt, NULL, xs);
+}
+
+// type casts to match what filter expects
+bool isN(void *n, void *i)
+{
+  return ((intptr_t)n) == ((intptr_t)i);
+}
+
+int countNs(list_t *xs, intptr_t n)
+{
+  return length(filter(isN, (void *)n, xs));
+}
+```
+
+### Mutable References
+
+1. New types: `t ref` where `t` is a type
+2. New expressions:
+- `ref e` to create a reference with initil contents `e`
+- `e1 := e2` to update contents
+- `!e` to retrieve contents (not negation)
+3. A variable bound to a reference is still immutable: it will always refer to the same reference. But the contents of the reference may change via :=. And there may be aliases to the reference, which matters a lot. Reference are first-class values. Like a one-field mutable object, := and ! do not specify the field.
+
+### Type Inference
+
+1. Type inference problem: give every binding/expression a type such that type-checking succeeds. Fail if and only if no solution exists. In principle, could be a pass before the type-checker. But often implemented together. 
+2. Central feature of ML type inference: it can infer types with type variables - relation to polymorphism. ML is in a sweet pot because type inference is more difficult without polymorphism or with subtyping.
+3. Key steps: 
+- Determine types of bindings in order (except for mutual recursion). So you can not use later bindings: will not type-check.
+- For each `val` or `fun` binding:
+  - Analyze definition for all necessary facts (constraints)
+  - Example: if see `x > 0` then x must be type int
+  - Type error if no way for all facts to hold (over-constrained)
+- Afterward, use type variables (e.g. 'a) for any unconstrained types. Example: an unused argument can have any type.
+- Finally, enforce the value restriction. A variable-binding can have a polymorphic type only if the expression is a variable or value. Else get a warning and unconstrained types are filled in with dummy types (basically unusable). The value restriction can cause problems when it is neccessary because we are not using mutation (Usually wrap in a function binding to fix it).
+
+### Mutual Recursion
+
+1. Allow f to call g and g to call f:
+```sml
+fun f1 p1 = e1
+and f2 p2 = e2
+and f3 p3 = e3
+
+datatype t1 = ...
+and t2 = ...
+and t3 = ...
+```
+2. State-machine: each state of the computation is a function. State transition is call another function with rest of input. Generalizes to any finite-state-machine example.
+```sml
+fun match xs =
+  let 
+    fun s_need_one xs =
+      case xs of
+        [] => true
+      | 1 :: xs' => s_need_two xs'
+      | _ => false
+    and s_need_two xs = 
+      case xs of
+        [] => false
+      | 2 :: xs' => s_need_one xs'
+      | _ => false
+  in s_need_one xs end
+```
+
+### Modules
+
+1. ML has structures to define modules. `structure MyModule = struct bindings end`. This is namespace management. Can use `open ModuleName` to get direct access to a module bindings. But often better to create local val-bindings for just the bindings.
+2. A signature is a type for a module (what bindings does it have and what are their types). Can define a signature and ascribe it to modules. Real value of signatures is to hide bindings and type definitions.
+```sml
+signature MATHLIB =
+sig
+  val fact : int -> int
+  val half_pi : int
+end
+
+structure MyMathLib :> MATHLIB =
+struct
+  fun fact x =
+    if x = 0
+    then 1
+    else x * fact (x - 1)
+  
+  val half_pi = Math.pi / 2.0
+
+  fun doubler y = y + y
+
+  val eight = doubler 4
+end
+```
+3. Modules with the same signatures still define different types. Different modules have different internal invariants. In fact, they have different type definitions.
+
+### Equivalence
+
+1. It is much easier to be equivalent if there are fewer possible arguments, e.g. with a type system and abstraction or avoiding side-effects: mutation, I/O, exceptions...
+2. Different definitions of equivalence:
+- PL Eq: given same inputs, same outputs and effects.
+- Asymptotic Eq: ignore constant factors.
+- Systems Eq: Account for constant overheads, performance tune.
