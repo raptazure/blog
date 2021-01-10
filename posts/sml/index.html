@@ -247,7 +247,221 @@ fun allShorterThan2 (xs, s) =
     val i = String.size s
   in 
     filter (fn x =&gt; String.size x &lt; i, xs) 
-  end</code></pre></div></article><div class="utterances" style="top:50px"></div></div></div></main><footer class="css-1wvahdb e1v9gu3l0"><style data-emotion-css="voneje">.css-voneje{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><style data-emotion-css="1u3kyku">.css-1u3kyku{position:relative;margin-left:auto;margin-right:auto;width:auto;max-width:40em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><div class="e1v9gu3l1 css-1u3kyku eqdtqc0"><style data-emotion-css="19sj128">.css-19sj128{color:rgba(0,0,0,0.54);font-size:0.8rem;}.css-19sj128:hover,.css-19sj128:focus{-webkit-text-decoration:none;text-decoration:none;}</style><a class="css-19sj128 e1v9gu3l2" href="/about">Copyright © <!-- -->2021<!-- --> <!-- -->raptazure<!-- -->. Built with Gatsby.</a></div></footer></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-128956609-1"></script><script>
+  end</code></pre></div><ol start="2"><li>Closure Idioms:</li></ol><ul><li>Pass functions with private data to iterators</li><li>Combining functions (e.g. composition)</li></ul><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun compose (f, g) = fn x =&gt; f (g x)
+fun sqrt_of_abs i = Math.sqrt (Real.fromInt (abs i))
+fun sqrt_of_abs&#x27; i = (Math.sqrt o Real.fromInt o abs) i
+val sqrt_of_abs&#x27;&#x27; = Math.sqrt o Real.fromInt o abs
+
+infix !&gt;
+fun x !&gt; f = f x
+fun sqrt_of_abs&#x27;&#x27;&#x27; i = i !&gt; abs !&gt; Real.fromInt !&gt; Math.sqrt
+
+fun backup1 (f, g) = fn x =&gt; case f x of 
+                                NONE =&gt; g x
+                              | SOME y =&gt; y
+
+fun backup2 (f, g) = fn x =&gt; f x handle _ =&gt; g x</code></pre></div><ul><li>Currying (multi-arg functions and partial application). Efficiency: SML/NJ compiles tuples more efficiently. But many other functional language implementations do better with currying (OCaml, F#, Haskell).</li></ul><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">val sorted3 = fn x =&gt; fn y =&gt; fn z =&gt; z &gt;= y andalso y &gt;= x
+
+val t1 = ((sorted3 7) 9) 11
+val t2 = sorted3 7 9 11
+
+fun sorted3_nicer x y z = z &gt;= y andalso y &gt;= x
+
+fun fold f acc xs = 
+  case xs of
+    [] =&gt; acc
+    | x :: xs&#x27; =&gt; fold f (f(acc, x)) xs&#x27;
+
+fun sum xs = fold (fn (x, y) =&gt; x + y) 0 xs 
+
+fun exists predicate xs =
+  case xs of
+    [] =&gt; false
+  | x :: xs&#x27; =&gt; predicate x orelse exists predicate xs&#x27;
+
+val hasZero = exists (fn x =&gt; x = 0)
+
+fun curry f = fn x =&gt; fn y =&gt; f (x, y)
+fun curry1 f x y = f (x, y)
+
+fun uncurry f (x, y) = f x y</code></pre></div><ul><li>Callbacks (e.g. in reactive programming): Library takes functions to apply later, when an event occurs. </li><li>Implementing an ADT with a record of functions.</li></ul><ol start="3"><li>Closure idioms without closures:</li></ol><ul><li>Higher-order programming is great.</li></ul><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">datatype &#x27;a mylist = Cons of &#x27;a * (&#x27;a mylist) | Empty
+
+fun map f xs =
+  case xs of
+    Empty =&gt; Empty
+  | Cons (x, xs) =&gt; Cons (f x, map f xs)
+
+fun filter f xs = 
+  case xs of
+    Empty =&gt; Empty
+  | Cons (x, xs) =&gt; if f x
+                    then Cons (x, filter f xs)
+                    else filter f xs
+
+fun length xs = 
+  case xs of
+    Empty =&gt; 0
+  | Cons (x, xs) =&gt; 1 + length xs
+
+val doubleAll = map (fn x =&gt; x * 2)
+
+fun countNs (xs, n : int) = length (filter (fn x =&gt; x = n) xs)</code></pre></div><ul><li>In OOP with one-method interfaces. An interface is a named <!-- -->[polymorphic]<!-- --> type. An object with one method can serve as a closure.</li></ul><div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">interface</span> <span class="token class-name">Func</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">B</span><span class="token punctuation">,</span> <span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+  <span class="token class-name">B</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token class-name">A</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">interface</span> <span class="token class-name">Pred</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+  <span class="token keyword">boolean</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token class-name">A</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+  <span class="token class-name">T</span> head<span class="token punctuation">;</span>
+  <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> tail<span class="token punctuation">;</span>
+
+  <span class="token class-name">List</span><span class="token punctuation">(</span><span class="token class-name">T</span> x<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    head <span class="token operator">=</span> x<span class="token punctuation">;</span>
+    tail <span class="token operator">=</span> xs<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">,</span> <span class="token class-name">B</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">B</span><span class="token punctuation">&gt;</span></span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">Func</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">B</span><span class="token punctuation">,</span> <span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> f<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>xs <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">B</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>f<span class="token punctuation">.</span><span class="token function">m</span><span class="token punctuation">(</span>xs<span class="token punctuation">.</span>head<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> xs<span class="token punctuation">.</span>tail<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> <span class="token function">filter</span><span class="token punctuation">(</span><span class="token class-name">Pred</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> f<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>xs <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>f<span class="token punctuation">.</span><span class="token function">m</span><span class="token punctuation">(</span>xs<span class="token punctuation">.</span>head<span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>xs<span class="token punctuation">.</span>head<span class="token punctuation">,</span> <span class="token function">filter</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> xs<span class="token punctuation">.</span>tail<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">filter</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> xs<span class="token punctuation">.</span>tail<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> <span class="token keyword">int</span> <span class="token function">length</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>xs <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token operator">++</span>ans<span class="token punctuation">;</span>
+      xs <span class="token operator">=</span> xs<span class="token punctuation">.</span>tail<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Clients</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> <span class="token function">doubleAll</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Func</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">public</span> <span class="token class-name">Integer</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> x <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span> xs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">countNs</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> xs<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Pred</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> x <span class="token operator">==</span> n<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre></div><ul><li>In procedural with explicit environment arguments. In C, a function pointer is only a code pointer. A common technique: always define function pointers and higher-order functions to take an extra explicit environment argument. But without generics, no good choice for type of list elements or the environment. Use <code class="language-text">void*</code> and various type casts…</li></ul><div class="gatsby-highlight" data-language="c"><pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">List</span> list_t<span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">List</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span>head<span class="token punctuation">;</span>
+  list_t <span class="token operator">*</span>tail<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+list_t <span class="token operator">*</span><span class="token function">makelist</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>x<span class="token punctuation">,</span> list_t <span class="token operator">*</span>xs<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  list_t <span class="token operator">*</span>ans <span class="token operator">=</span> <span class="token punctuation">(</span>list_t <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>list_t<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  ans<span class="token operator">-&gt;</span>head <span class="token operator">=</span> x<span class="token punctuation">;</span>
+  ans<span class="token operator">-&gt;</span>tail <span class="token operator">=</span> xs<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+list_t <span class="token operator">*</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>env<span class="token punctuation">,</span> list_t <span class="token operator">*</span>xs<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>xs <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token function">makelist</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> xs<span class="token operator">-&gt;</span>head<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> env<span class="token punctuation">,</span> xs<span class="token operator">-&gt;</span>tail<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+list_t <span class="token operator">*</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token function">bool</span> <span class="token punctuation">(</span><span class="token operator">*</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>env<span class="token punctuation">,</span> list_t <span class="token operator">*</span>xs<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>xs <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> xs<span class="token operator">-&gt;</span>head<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">makelist</span><span class="token punctuation">(</span>xs<span class="token operator">-&gt;</span>head<span class="token punctuation">,</span> <span class="token function">filter</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> env<span class="token punctuation">,</span> xs<span class="token operator">-&gt;</span>tail<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token function">filter</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> env<span class="token punctuation">,</span> xs<span class="token operator">-&gt;</span>tail<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">length</span><span class="token punctuation">(</span>list_t <span class="token operator">*</span>xs<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>xs <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    <span class="token operator">++</span>ans<span class="token punctuation">;</span>
+    xs <span class="token operator">=</span> xs<span class="token operator">-&gt;</span>tail<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">doubleInt</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ignore<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>i<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>intptr_t<span class="token punctuation">)</span>i<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// assumes list holds intptr_t fileds</span>
+list_t <span class="token operator">*</span><span class="token function">doubleAll</span><span class="token punctuation">(</span>list_t <span class="token operator">*</span>xs<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">map</span><span class="token punctuation">(</span>doubleInt<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> xs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// type casts to match what filter expects</span>
+bool <span class="token function">isN</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>n<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>i<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>intptr_t<span class="token punctuation">)</span>n<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>intptr_t<span class="token punctuation">)</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">countNs</span><span class="token punctuation">(</span>list_t <span class="token operator">*</span>xs<span class="token punctuation">,</span> intptr_t n<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">length</span><span class="token punctuation">(</span><span class="token function">filter</span><span class="token punctuation">(</span>isN<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>n<span class="token punctuation">,</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div><h3>Mutable References</h3><ol><li>New types: <code class="language-text">t ref</code> where <code class="language-text">t</code> is a type</li><li>New expressions:</li></ol><ul><li><code class="language-text">ref e</code> to create a reference with initil contents <code class="language-text">e</code></li><li><code class="language-text">e1 := e2</code> to update contents</li><li><code class="language-text">!e</code> to retrieve contents (not negation)</li></ul><ol start="3"><li>A variable bound to a reference is still immutable: it will always refer to the same reference. But the contents of the reference may change via :=. And there may be aliases to the reference, which matters a lot. Reference are first-class values. Like a one-field mutable object, := and ! do not specify the field.</li></ol><h3>Type Inference</h3><ol><li>Type inference problem: give every binding/expression a type such that type-checking succeeds. Fail if and only if no solution exists. In principle, could be a pass before the type-checker. But often implemented together. </li><li>Central feature of ML type inference: it can infer types with type variables - relation to polymorphism. ML is in a sweet pot because type inference is more difficult without polymorphism or with subtyping.</li><li>Key steps: </li></ol><ul><li>Determine types of bindings in order (except for mutual recursion). So you can not use later bindings: will not type-check.</li><li>For each <code class="language-text">val</code> or <code class="language-text">fun</code> binding:<ul><li>Analyze definition for all necessary facts (constraints)</li><li>Example: if see <code class="language-text">x &gt; 0</code> then x must be type int</li><li>Type error if no way for all facts to hold (over-constrained)</li></ul></li><li>Afterward, use type variables (e.g. ‘a) for any unconstrained types. Example: an unused argument can have any type.</li><li>Finally, enforce the value restriction. A variable-binding can have a polymorphic type only if the expression is a variable or value. Else get a warning and unconstrained types are filled in with dummy types (basically unusable). The value restriction can cause problems when it is neccessary because we are not using mutation (Usually wrap in a function binding to fix it).</li></ul><h3>Mutual Recursion</h3><ol><li>Allow f to call g and g to call f:</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun f1 p1 = e1
+and f2 p2 = e2
+and f3 p3 = e3
+
+datatype t1 = ...
+and t2 = ...
+and t3 = ...</code></pre></div><ol start="2"><li>State-machine: each state of the computation is a function. State transition is call another function with rest of input. Generalizes to any finite-state-machine example.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">fun match xs =
+  let 
+    fun s_need_one xs =
+      case xs of
+        [] =&gt; true
+      | 1 :: xs&#x27; =&gt; s_need_two xs&#x27;
+      | _ =&gt; false
+    and s_need_two xs = 
+      case xs of
+        [] =&gt; false
+      | 2 :: xs&#x27; =&gt; s_need_one xs&#x27;
+      | _ =&gt; false
+  in s_need_one xs end</code></pre></div><h3>Modules</h3><ol><li>ML has structures to define modules. <code class="language-text">structure MyModule = struct bindings end</code>. This is namespace management. Can use <code class="language-text">open ModuleName</code> to get direct access to a module bindings. But often better to create local val-bindings for just the bindings.</li><li>A signature is a type for a module (what bindings does it have and what are their types). Can define a signature and ascribe it to modules. Real value of signatures is to hide bindings and type definitions.</li></ol><div class="gatsby-highlight" data-language="sml"><pre class="language-sml"><code class="language-sml">signature MATHLIB =
+sig
+  val fact : int -&gt; int
+  val half_pi : int
+end
+
+structure MyMathLib :&gt; MATHLIB =
+struct
+  fun fact x =
+    if x = 0
+    then 1
+    else x * fact (x - 1)
+  
+  val half_pi = Math.pi / 2.0
+
+  fun doubler y = y + y
+
+  val eight = doubler 4
+end</code></pre></div><ol start="3"><li>Modules with the same signatures still define different types. Different modules have different internal invariants. In fact, they have different type definitions.</li></ol><h3>Equivalence</h3><ol><li>It is much easier to be equivalent if there are fewer possible arguments, e.g. with a type system and abstraction or avoiding side-effects: mutation, I/O, exceptions…</li><li>Different definitions of equivalence:</li></ol><ul><li>PL Eq: given same inputs, same outputs and effects.</li><li>Asymptotic Eq: ignore constant factors.</li><li>Systems Eq: Account for constant overheads, performance tune.</li></ul></article><div class="utterances" style="top:50px"></div></div></div></main><footer class="css-1wvahdb e1v9gu3l0"><style data-emotion-css="voneje">.css-voneje{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><style data-emotion-css="1u3kyku">.css-1u3kyku{position:relative;margin-left:auto;margin-right:auto;width:auto;max-width:40em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;}</style><div class="e1v9gu3l1 css-1u3kyku eqdtqc0"><style data-emotion-css="19sj128">.css-19sj128{color:rgba(0,0,0,0.54);font-size:0.8rem;}.css-19sj128:hover,.css-19sj128:focus{-webkit-text-decoration:none;text-decoration:none;}</style><a class="css-19sj128 e1v9gu3l2" href="/about">Copyright © <!-- -->2021<!-- --> <!-- -->raptazure<!-- -->. Built with Gatsby.</a></div></footer></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-128956609-1"></script><script>
     window.GATSBY_GTAG_PLUGIN_GA_TRACKING_ID = (
       'UA-128956609-1'
     );
