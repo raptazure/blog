@@ -9,7 +9,7 @@ lang: en
     <tr>
       <td style="border: 0px;">
         <div>
-          <a href="http://h1trust.github.io">Hitrust</a>
+          <a href="http://h1trust.github.io/">hitrust</a>
         </div>
         <div>
           <a href="https://miroox.github.io/blog/">miRoox</a>
@@ -42,9 +42,6 @@ lang: en
           <a href="https://twic.me">Twikor</a>
         </div>
         <div>
-          <a href="http://kevinfly.com/">Kevin</a>
-        </div>
-        <div>
           <a href="https://vaala.cat/">Vaala</a>
         </div>
         <div>
@@ -52,6 +49,9 @@ lang: en
         </div>
       </td>
       <td style="border: 0px;">
+        <div>
+          <a href="http://lagda.org/">清浔</a>
+        </div> 
         <div>
           <a href="https://innei.ren">静かな森</a>
         </div>
@@ -79,9 +79,6 @@ lang: en
         <div>
           <a href="https://misaka-9936.github.io/">叶子</a>
         </div>
-        <div>
-          <a href="http://www.shuizilong.com/house/">某岛</a>
-        </div> 
       </td>
     </tr>
   </table>
