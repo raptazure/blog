@@ -5,7 +5,7 @@ lang: en
 ---
 
 | PLT { types, systems, propositions }  
-| Contemporary piano & Touhou music  
+| Contemporary classical & Touhou music  
 | INFP ++ Ti, enneagram type 4, ♓︎
 
 [GitHub](https://github.com/raptazure) | [Twitter](https://twitter.com/raptazure) | [Instagram](https://www.instagram.com/raptazure/) | [Email](mailto:hermit0x9@outlook.com) | [RSS](https://raptazure.github.io/rss.xml)
