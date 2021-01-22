@@ -4,8 +4,6 @@ title: Me...
 lang: en
 ---
 
-<!-- import Resume from "@/components/Resume"; -->
-
 | PLT { types, systems, propositions }  
 | Contemporary piano & Touhou music  
 | INFP ++ Ti, enneagram type 4, ♓︎
