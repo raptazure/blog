@@ -15,7 +15,7 @@ lang: en
           <a href="https://miroox.github.io/blog/">miRoox</a>
         </div>
         <div>
-          <a href="https://cwksc.github.io">CWKSC</a>
+          <a href="https://cwksc.github.io/">CWKSC</a>
         </div>
         <div>
           <a href="https://leolanger.github.io/">Leolanger</a>
@@ -36,10 +36,10 @@ lang: en
           <a href="https://fallen.moe/">Fallenhh</a>
         </div>
         <div>
-          <a href="http://www.lionad.art">Lionad</a>
+          <a href="http://www.lionad.art/">Lionad</a>
         </div>
         <div>
-          <a href="https://twic.me">Twikor</a>
+          <a href="https://twic.me/">Twikor</a>
         </div>
         <div>
           <a href="https://vaala.cat/">Vaala</a>
@@ -53,25 +53,28 @@ lang: en
           <a href="http://lagda.org/">清浔</a>
         </div> 
         <div>
-          <a href="https://innei.ren">静かな森</a>
+          <a href="https://innei.ren/">静かな森</a>
         </div>
          <div>
           <a href="https://qjx.app/">ツキの月</a>
         </div>
         <div>
-          <a href="https://blog.badapple.pro">东方幻梦</a>
+          <a href="https://ice1000.org/">千里冰封</a>
         </div>
         <div>
-          <a href="https://blog.lenva.tech">过期薯条</a>
+          <a href="https://blog.badapple.pro/">东方幻梦</a>
         </div>
         <div>
-          <a href="https://chanshiyu.com">蝉时雨</a>
+          <a href="https://blog.lenva.tech/">过期薯条</a>
         </div>
         <div>
-          <a href="https://vensing.com">芝士部落格</a>
+          <a href="https://chanshiyu.com/">蝉时雨</a>
         </div>
         <div>
-          <a href="https://nek0ri.de">猫梨の部屋</a>
+          <a href="https://vensing.com/">芝士部落格</a>
+        </div>
+        <div>
+          <a href="https://nek0ri.de/">猫梨の部屋</a>
         </div> 
         <div>
           <a href="https://linux.dog/">蕾咪io</a>
