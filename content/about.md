@@ -57,3 +57,7 @@ lang: en
 > 『ヒカリ』 - 凋叶棕
 
 </div>
+
+<br />
+
+** [BTW, I am trying to write in a journal daily.](https://raptazure.github.io/journal) **

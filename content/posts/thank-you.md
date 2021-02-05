@@ -39,10 +39,3 @@ tags:
 > 能夠相互理解該有多幸福
 
 </div>
-
-<br />   
-<br />
-
-<div>
-<iframe frameborder="no"  width="330" height="86" src="//music.163.com/outchain/player?type=2&id=423104158&auto=0&height=66"></iframe>
-</div>
