@@ -23,7 +23,7 @@ tags:
   SigLevel = Optional TrustedOnly
   Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn/$arch
   ```
-  `sudo pacman -S archlinuxcn-keyring` `sudo pacman -Syyu`
+  `sudo pacman -S archlinuxcn-keyring` `sudo pacman -Syy`
 - 安装输入法：`yay -S ibus-rime`  
   `ibus-setup`，选择 Input > Add > Chinese > Rime  
   `vim ~/.xprofile`
@@ -34,8 +34,10 @@ tags:
   ibus-daemon -x -d
   ```
 
-- Fix crackling and popping sound when using headphones: `pactl unload-module module-suspend-on-idle`.
-- Stack 记得换源以后再装 Simple-GHC，但是 hlsp 下载速度不怎么稳定的样子（？
+- Fix crackling and popping sound when using headphones: pactl unload-module module-suspend-on-idle.
+- Fix touchscreen scrolling in Firefox: Edit `/etc/security/pam_env.conf` and add `MOZ_USE_XINPUT2 DEFAULT=1`. Reboot and restart firefox.
+- Stack 换源和安好 make 之后再装 Simple-GHC。
+- 博客迁移： `sudo pacman -S autoconf pkgconf automake libtool nasm` 来让 mozjpeg 可以编译，如果某 sass 文件报错就在相应位置加个 `display: none`。
 - 运行 `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh` 时报错 `curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to sh.rustup.rs:443`，关闭当前网络的 IPv6 连接之后重试。
 - 代理：使用 [Clashy](https://github.com/SpongeNobody/Clashy) 和 [CordCloud](https://www.cordcloud.site/)，终端设置可以直接 export，Firefox 记得在 proxy 设置中下面那几个打上勾勾，Chrome 要设置好 System Proxy。
 - TIM on i3wm: `sudo pacman -S deepin.com.qq.office`
