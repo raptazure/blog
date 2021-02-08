@@ -71,7 +71,7 @@ lang: en
           <a href="https://chanshiyu.com/">蝉时雨</a>
         </div>
         <div>
-          <a href="https://vensing.com/">芝士部落格</a>
+          <a href="https://chee5e.space">芝士部落格</a>
         </div>
         <div>
           <a href="https://nek0ri.de/">猫梨の部屋</a>
