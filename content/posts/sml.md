@@ -2,7 +2,7 @@
 title: Standard ML
 date: 2020-09-16
 tags:
-  - PL
+  - Polymorphic λ
 ---
 
 ### ML Variable Bindings and Expressions

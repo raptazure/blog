@@ -1,8 +1,8 @@
 ---
-title: SPLV'20
+title: SPLV Idris
 date: 2021-01-22
 tags:
-  - plt
+  - type theory
 ---
 
 ## The implementation of Idris 2

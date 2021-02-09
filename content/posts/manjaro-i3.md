@@ -2,7 +2,7 @@
 title: Linux
 date: 2019-11-10
 tags:
-  - notes
+  - tooling
 ---
 
 ![desktop](../images/manjaro-i3/desktop.jpeg)
