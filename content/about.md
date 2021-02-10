@@ -4,7 +4,8 @@ title: Me...
 lang: en
 ---
 
-| PLT { types, systems, propositions }  
+| Type Systems and Formal Verification  
+| Haskell :: PL ∪ Agda :: PA ∪ Nix :: PM  
 | Contemporary classical & Touhou music  
 | INFP ++ Ti, enneagram type 4, ♓︎
 
