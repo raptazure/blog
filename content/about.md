@@ -4,6 +4,7 @@ title: Me...
 lang: en
 ---
 
+| Type Systems, Declarative Programs  
 | Haskell :: PL ∪ Agda :: PA ∪ Nix :: PM  
 | Contemporary classical & Touhou music  
 | INFP ++ Ti, enneagram type 4, ♓︎
@@ -60,4 +61,4 @@ lang: en
 
 <br />
 
-** [BTW, I am trying to write in a journal daily.](https://raptazure.github.io/journal) **
+** [BTW, I am trying to write in journals here.](https://raptazure.github.io/journal) **
