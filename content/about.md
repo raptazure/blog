@@ -4,7 +4,7 @@ title: Me...
 lang: en
 ---
 
-| Type Systems and Formal Verification  
+| Type Systems and Formal Semantics  
 | Haskell :: PL ∪ Agda :: PA ∪ Nix :: PM  
 | Contemporary classical & Touhou music  
 | INFP ++ Ti, enneagram type 4, ♓︎
