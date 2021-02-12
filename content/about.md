@@ -61,4 +61,4 @@ lang: en
 
 <br />
 
-** [BTW, I am trying to write in journals here.](https://raptazure.github.io/journal) **
+** [BTW, I am trying to write in a journal here.](https://raptazure.github.io/journal) **
