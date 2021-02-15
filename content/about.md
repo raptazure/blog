@@ -5,7 +5,6 @@ lang: en
 ---
 
 | Type Systems, Declarative Programs  
-| Haskell :: PL ∪ Agda :: PA ∪ Nix :: PM  
 | Contemporary classical & Touhou music  
 | INFP ++ Ti, enneagram type 4, ♓︎
 
