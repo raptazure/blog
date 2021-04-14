@@ -1,4 +1,6 @@
-# 🌈 魔法の森
+# 🍃 时与风
+
+> 风带​来故事的种子，时间使其发芽。
 
 - Support utterances and RSS. Minimalism.  
 - Built with Gatsby / React / TypeScript.  

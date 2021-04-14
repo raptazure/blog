@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Raptazure',
-    description: '魔法の森',
+    description: '时与风',
     keywords: 'blog, gatsbyjs, computer-science',
     siteUrl: 'https://raptazure.github.io',
     lang: 'zh-Hans',
@@ -90,8 +90,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: '魔法の森',
-        short_name: '魔法の森',
+        name: 'Time and Wind',
+        short_name: '时与风',
         start_url: '/',
         background_color: '#ffffff',
         theme_color: '#ffffff',
@@ -146,7 +146,7 @@ module.exports = {
               }
               `,
             output: '/rss.xml',
-            title: `魔法の森 | RSS Feed`,
+            title: `Time and Wind | RSS Feed`,
             site_url: `https://raptazure.github.io`
           }
         ]

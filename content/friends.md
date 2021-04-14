@@ -52,10 +52,10 @@ lang: en
         <div>
           <a href="http://lagda.org/">清浔</a>
         </div> 
-        <div>
+        <div lang="ja">
           <a href="https://innei.ren/">静かな森</a>
         </div>
-         <div>
+         <div lang="ja">
           <a href="https://qjx.app/">ツキの月</a>
         </div>
         <div>
@@ -73,7 +73,7 @@ lang: en
         <div>
           <a href="https://chee5e.space">芝士部落格</a>
         </div>
-        <div>
+        <div lang="ja">
           <a href="https://nek0ri.de/">猫梨の部屋</a>
         </div> 
         <div>
