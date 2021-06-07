@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Raptazure',
-    description: '时与风',
+    description: 'Meditation',
     keywords: 'blog, gatsbyjs, computer-science',
     siteUrl: 'https://raptazure.github.io',
     lang: 'zh-Hans',
@@ -90,8 +90,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: 'Time and Wind',
-        short_name: '时与风',
+        name: 'Meditation',
+        short_name: 'Meditation',
         start_url: '/',
         background_color: '#ffffff',
         theme_color: '#ffffff',
@@ -146,7 +146,7 @@ module.exports = {
               }
               `,
             output: '/rss.xml',
-            title: `Time and Wind | RSS Feed`,
+            title: `Meditation | RSS Feed`,
             site_url: `https://raptazure.github.io`
           }
         ]

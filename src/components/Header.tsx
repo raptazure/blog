@@ -24,9 +24,9 @@ const HeaderInner = styled(Container)`
 
 const HomepageLink = styled(Link)`
   color: ${colors.black};
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   margin-right: 1rem;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Dancing Script', cursive;
   &:hover,
   &:focus {
     text-decoration: none;
@@ -55,9 +55,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = () => (
   <StyledHeader>
     <HeaderInner>
-      <HomepageLink to="/" lang="ja">
-        Time and Wind
-      </HomepageLink>
+      <HomepageLink to="/">Meditation</HomepageLink>
       <NavigationBar>
         <NavigationLink to="/about">About</NavigationLink>
         <NavigationLink to="/friends">Friends</NavigationLink>

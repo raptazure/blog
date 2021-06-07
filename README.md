@@ -1,6 +1,4 @@
-# 🍃 时与风
-
-> 风带​来故事的种子，时间使其发芽。
+# 🍃 Meditation
 
 - Support utterances and RSS. Minimalism.  
 - Built with Gatsby / React / TypeScript.  

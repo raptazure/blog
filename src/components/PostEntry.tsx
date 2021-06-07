@@ -11,6 +11,7 @@ interface PostEntryProps {
 
 const PostEntryContainer = styled.li`
   display: flex;
+  font-family: 'Ubuntu Mono', monospace;
   @media (max-width: 350px) {
     flex-direction: column;
   }

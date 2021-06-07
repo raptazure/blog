@@ -14,9 +14,9 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => (
           {data.allMdx.edges
             .filter(({ node }) => node.fields.layout === 'journal')
             .map(({ node }) => {
-              const { date } = node.frontmatter;
+              const { title, date } = node.frontmatter;
               const { slug } = node.fields;
-              return <JournalEntry key={slug} slug={slug} date={date} />;
+              return <JournalEntry key={slug} slug={slug} date={date} title={title} />;
             })}
         </ul>
       </Container>
@@ -37,6 +37,7 @@ interface IndexPageProps {
           };
           frontmatter: {
             date: string;
+            title: string;
           };
         };
       }[];
@@ -55,6 +56,7 @@ export const pageQuery = graphql`
           }
           frontmatter {
             date(formatString: "* ddd - MMM DD, YYYY")
+            title
           }
         }
       }
