@@ -1,6 +1,7 @@
 $han-font-path: '../../node_modules/han-css/font/';
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Ubuntu+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=family=PT+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap');
 
 @font-face {
@@ -35,7 +36,7 @@ $han-font-path: '../../node_modules/han-css/font/';
     url(../fonts/s-bolditalic.ttf) format('opentype'), local(Celeste);
 }
 
-$han-sans: CELESTE, 'Helvetica Neue', Helvetica, Arial;
+$han-sans: 'PT Mono', monospace;
 $han-serif: CELESTE, Georgia, 'Times New Roman';
 $han-indent: 1rem;
 
