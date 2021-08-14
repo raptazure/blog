@@ -9,13 +9,10 @@ lang: en
     <tr>
       <td style="border: 0px;">
         <div>
-          <a href="http://h1trust.github.io/">hitrust</a>
+          <a href="https://cwksc.github.io/">CWKSC</a>
         </div>
         <div>
           <a href="https://miroox.github.io/blog/">miRoox</a>
-        </div>
-        <div>
-          <a href="https://cwksc.github.io/">CWKSC</a>
         </div>
         <div>
           <a href="https://leolanger.github.io/">Leolanger</a>
