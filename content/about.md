@@ -9,11 +9,11 @@ lang: en
 
 <div >
 
-Deus sive Natura.  
-Δακρυόεν γελάσασα.  
+Disciple of λόγος.  
+Linguistics & Philosophy.
 
-> Disciple of λόγος  
-> Linguistics & Philosophy  
+> Deus sive Natura.  
+> Δακρυόεν γελάσασα.  
 
 </div>
 
