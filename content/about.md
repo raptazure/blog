@@ -12,8 +12,8 @@ lang: en
 Deus sive Natura.  
 Δακρυόεν γελάσασα.  
 
+> Disciple of λόγος  
 > Linguistics & Philosophy  
-> Λόγος et φιλοσοφία
 
 </div>
 
