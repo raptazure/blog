@@ -10,7 +10,7 @@ lang: en
 <div >
 
 - Disciple of Spinoza's God.  
-- Into linguistics and philosophy.
+- Into linguistics & philosophy.
 
 </div>
 
