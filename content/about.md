@@ -9,11 +9,8 @@ lang: en
 
 <div >
 
-Disciple of λόγος.  
-Linguistics & Philosophy.
-
-> Deus sive Natura.  
-> Δακρυόεν γελάσασα.  
+- Disciple of Spinoza's God.  
+- Into linguistics and philosophy.
 
 </div>
 
