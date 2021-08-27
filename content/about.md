@@ -9,7 +9,8 @@ lang: en
 
 <div >
 
-- Disciple of Spinoza's God.  
+- Disciple of Stoic λόγος.
+- Believer of Spinoza's God.  
 - Into linguistics & philosophy.
 
 </div>
