@@ -16,4 +16,5 @@ lang: en
 
 </div>
 
-[BTW, here are some of my journals.](https://raptazure.github.io/journal) 
+Quote ⤇ [The Marriage of Heaven and Hell](https://en.wikipedia.org/wiki/The_Marriage_of_Heaven_and_Hell)  
+Illustration ⤇ [Paradise Lost](https://en.wikipedia.org/wiki/Paradise_Lost)
