@@ -1,17 +1,11 @@
 ---
-title: Linux
+title: Manjaro Linux
 date: 2019-11-10
 tags:
   - tooling
 ---
 
 ![desktop](../images/manjaro-i3/desktop.jpeg)
-
-## Our Story
-
-
-如果一个月以前的我没有决定安装 Linux + Windows 双系统的话，也许我还不知道 vim key binding 的高效，也许我还不知道怎么用 git，也许我还不会产生用 TypeScript 给 VS Code 写个插件的想法... 在这一个多月的时间里，从一开始的 KDE 桌面折腾到 i3wm，从默认的 shell 折腾到 fish + omf，从自带的 terminal emulator 折腾到 alacritty... 在编写各种配置文件，完成各种个性化定制的同时，我也熟悉并喜欢上了命令行环境的简洁高效，喜欢上了通过社区发现并解决问题的过程，并也想为开源社区做些什么。确实，各种环境配置在某种程度上很费时间，经常熬夜修改各种环境错误，在 GitHub Issue 区到处寻找解答，但在这一个月里，我与计算机之间的距离仿佛被无限拉近，不如说，这也算是某种缘分吧。
-
 
 ## Some Notes
 

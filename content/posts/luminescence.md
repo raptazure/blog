@@ -2,7 +2,7 @@
 title: Luminescence
 date: 2021-06-27
 tags:
-  - Stream of consciousness
+  - Consciousness
 ---
 
 Because of insomnia, I woke up late, without out any energy. Noticed that it was already 7:49, I hurried to school and was grasping for breath desperately after my arrival, only to find my blurred vision of everything around me - I forget to bring my glasses! Wondering why people's mind is so delicate that it needs to be recharged everyday to keep one's sanity, if so called “sanity" really exists,  I began to prepare for the lessons. 
