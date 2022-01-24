@@ -16,5 +16,5 @@ lang: en
 
 </div>
 
-Quote ⤇ [The Marriage of Heaven and Hell](https://en.wikipedia.org/wiki/The_Marriage_of_Heaven_and_Hell)  
-Illustration ⤇ [Paradise Lost](https://en.wikipedia.org/wiki/Paradise_Lost)
+Q ⤇ [The Marriage of Heaven and Hell](https://en.wikipedia.org/wiki/The_Marriage_of_Heaven_and_Hell)  
+I ⤇ [Paradise Lost](https://en.wikipedia.org/wiki/Paradise_Lost)
